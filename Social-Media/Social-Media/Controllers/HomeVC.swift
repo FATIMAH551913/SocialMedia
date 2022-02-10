@@ -81,8 +81,12 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID ) as! PostCell
+        let post = posts[indexPath.row]//يجيب لي البوست الحالي
+        cell.postTextLbl.text = post.text// راح اعبيه في هذي الخلية
+       
         return cell
     }
-    
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 400
+    }
 }
