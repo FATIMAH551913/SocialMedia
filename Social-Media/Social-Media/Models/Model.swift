@@ -15,6 +15,7 @@ struct Post: Decodable {
     var image : String
     var likes : Int
     var text : String
+    var owner : User
 }
 
 var posts:[Post] = []

@@ -16,6 +16,7 @@
 		FA3111B927B2D44E002F1885 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3111B827B2D44E002F1885 /* HomeVC.swift */; };
 		FA6F932827B4496E00A8571D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F932727B4496E00A8571D /* Model.swift */; };
 		FA6F932D27B45F3500A8571D /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F932C27B45F3500A8571D /* PostCell.swift */; };
+		FA98AFC727B5BD3F00B08BC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98AFC627B5BD3F00B08BC5 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		FA3111B827B2D44E002F1885 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		FA6F932727B4496E00A8571D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		FA6F932C27B45F3500A8571D /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		FA98AFC627B5BD3F00B08BC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				FA6F932727B4496E00A8571D /* Model.swift */,
+				FA98AFC627B5BD3F00B08BC5 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 			files = (
 				FA6F932827B4496E00A8571D /* Model.swift in Sources */,
 				FA3111B927B2D44E002F1885 /* HomeVC.swift in Sources */,
+				FA98AFC727B5BD3F00B08BC5 /* User.swift in Sources */,
 				FA6F932D27B45F3500A8571D /* PostCell.swift in Sources */,
 				FA3111A527B2D25E002F1885 /* AppDelegate.swift in Sources */,
 				FA3111A727B2D25E002F1885 /* SceneDelegate.swift in Sources */,

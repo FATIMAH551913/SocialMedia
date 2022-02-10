@@ -83,7 +83,29 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID ) as! PostCell
         let post = posts[indexPath.row]//يجيب لي البوست الحالي
         cell.postTextLbl.text = post.text// راح اعبيه في هذي الخلية
-       
+        
+        // the logic of filling the image frome url?
+     //كيف اعرض صوره بالانترنت في imageView من رابط نوع string الي imageView كالتالي:
+        //نحول الصورة الي URL
+        let imageStringUrl = post.image
+        if let url = URL(string: imageStringUrl) {
+            if let imageData = try? Data(contentsOf: url){
+                cell.PostImage.image = UIImage(data: imageData)
+            }
+            
+        }
+ //--------------------------------------------------------شرح
+//        URL(string: <#T##String#>)
+        //ثم نحول URLالي Data
+//        Date(contentsOf: )
+        // ثم نعتمد علي Data من خلال UIImage inisilizer as prameter
+//        cell.PostImage.image = UIImage(data: <#T##Data#>)
+        //-------------------------------------------------------شرح
+        
+        //filling the user Data:
+        cell.username.text = post.owner.firstName + " " + post.owner.lastName
+        
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

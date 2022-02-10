@@ -15,11 +15,22 @@ class PostCell: UITableViewCell {
         namelbl.translatesAutoresizingMaskIntoConstraints = false
         namelbl.font = UIFont.systemFont(ofSize: 16,weight: .medium)
         namelbl.textAlignment = .left
-//        namelbl.alignmentRectInsets = .fill
         namelbl.textColor = .black
         namelbl.numberOfLines = 0
-//        namelbl.backgroundColor = .yellow
+        namelbl.backgroundColor = .yellow
         return namelbl
+    }()
+    
+    let username : UILabel = {
+       let un = UILabel()
+        un.textColor = .black
+//        un.text = "hi"
+        un.translatesAutoresizingMaskIntoConstraints = false
+        un.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        un.textAlignment = .left
+        un.backgroundColor = .green
+        
+        return un
     }()
     
     
@@ -28,25 +39,25 @@ class PostCell: UITableViewCell {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.clipsToBounds = true
         image.image = UIImage(named: "unnamed")
+        image.contentMode = .scaleAspectFill
         
         return image
     }()
-//
-//    let stackView : UIStackView = {
-//
-//        let stack = UIStackView()
-//        stack.translatesAutoresizingMaskIntoConstraints = false
-//        stack.axis = .vertical
-//        stack.distribution = .fillEqually
-//        stack.spacing = 10
-//      return stack
-//    }()
+
+    let stackView : UIStackView = {
+
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.spacing = 10
+      return stack
+    }()
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
 
-      
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -55,31 +66,45 @@ class PostCell: UITableViewCell {
     }
     
     func setUpView(){
-        self.addSubview(postTextLbl)
+//        self.addSubview(username)
+//        self.addSubview(postTextLbl)
         self.addSubview(PostImage)
 
-//        self.addSubview(stackView)
-//        stackView.addArrangedSubview(postTextLbl)
+        self.addSubview(stackView)
+        stackView.addArrangedSubview(username)
+        stackView.addArrangedSubview(postTextLbl)
 //        stackView.addArrangedSubview(PostImage)
+       
         
+        NSLayoutConstraint.activate([
         
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+//            stackView.bottomAnchor.constraint(equalTo: PostImage.bottomAnchor, constant: -5)
+            
+            
+//            username.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+//            username.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 5),
+//            username.bottomAnchor.constraint(equalTo: PostImage.topAnchor, constant: 1),
+////            username.heightAnchor.constraint(equalTo: heightAnchor, constant: 10),
+//
+//            username.widthAnchor.constraint(equalTo: widthAnchor, constant: 150),
+//
+//            postTextLbl.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+//            postTextLbl.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
+//            postTextLbl.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
+//            postTextLbl.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
         
         NSLayoutConstraint.activate([
 
-            postTextLbl.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            postTextLbl.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
-            postTextLbl.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
-            postTextLbl.centerXAnchor.constraint(equalTo: centerXAnchor),
-//            postTextLbl.heightAnchor.constraint(equalTo: heightAnchor, constant: 30),
-//            postTextLbl.bottomAnchor.constraint(equalTo: PostImage.topAnchor, constant: -10),
-            
-            
-            PostImage.topAnchor.constraint(equalTo: postTextLbl.bottomAnchor, constant: 10),
-            PostImage.rightAnchor.constraint(equalTo:rightAnchor, constant: -10),
-            PostImage.leftAnchor.constraint(equalTo:leftAnchor, constant: 10),
-//            PostImage.widthAnchor.constraint(equalTo: widthAnchor,constant: 120),
-//            PostImage.heightAnchor.constraint(equalTo: heightAnchor, constant: 70),
-            PostImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+            PostImage.topAnchor.constraint(equalTo: stackView.bottomAnchor,constant: 20),
+            PostImage.rightAnchor.constraint(equalTo:rightAnchor, constant: -5),
+            PostImage.leftAnchor.constraint(equalTo:leftAnchor, constant: 5),
+            PostImage.heightAnchor.constraint(equalToConstant: 200),
+//            PostImage.heightAnchor.constraint(equalTo: heightAnchor, constant: 20),
+//            PostImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
         ])
         
         
