@@ -14,7 +14,7 @@
 		FA3111AE27B2D25F002F1885 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA3111AD27B2D25F002F1885 /* Assets.xcassets */; };
 		FA3111B127B2D25F002F1885 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3111AF27B2D25F002F1885 /* LaunchScreen.storyboard */; };
 		FA3111B927B2D44E002F1885 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3111B827B2D44E002F1885 /* HomeVC.swift */; };
-		FA6F932827B4496E00A8571D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F932727B4496E00A8571D /* Model.swift */; };
+		FA6F932827B4496E00A8571D /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F932727B4496E00A8571D /* Post.swift */; };
 		FA6F932D27B45F3500A8571D /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F932C27B45F3500A8571D /* PostCell.swift */; };
 		FA98AFC727B5BD3F00B08BC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98AFC627B5BD3F00B08BC5 /* User.swift */; };
 /* End PBXBuildFile section */
@@ -31,7 +31,7 @@
 		FA3111B027B2D25F002F1885 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA3111B227B2D25F002F1885 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA3111B827B2D44E002F1885 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
-		FA6F932727B4496E00A8571D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		FA6F932727B4496E00A8571D /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FA6F932C27B45F3500A8571D /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		FA98AFC627B5BD3F00B08BC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,7 +110,7 @@
 		FA6F932A27B44AB600A8571D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FA6F932727B4496E00A8571D /* Model.swift */,
+				FA6F932727B4496E00A8571D /* Post.swift */,
 				FA98AFC627B5BD3F00B08BC5 /* User.swift */,
 			);
 			path = Models;
@@ -239,7 +239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA6F932827B4496E00A8571D /* Model.swift in Sources */,
+				FA6F932827B4496E00A8571D /* Post.swift in Sources */,
 				FA3111B927B2D44E002F1885 /* HomeVC.swift in Sources */,
 				FA98AFC727B5BD3F00B08BC5 /* User.swift in Sources */,
 				FA6F932D27B45F3500A8571D /* PostCell.swift in Sources */,

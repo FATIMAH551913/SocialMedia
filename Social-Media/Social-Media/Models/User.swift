@@ -6,8 +6,10 @@
 //
 
 import Foundation
-struct User : Decodable {
-    var id : String
-    var firstName : String
-    var lastName : String
+struct User: Decodable {
+    var id: String
+    var firstName: String
+    var lastName: String
+    var picture: String
+    
 }

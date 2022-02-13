@@ -9,7 +9,6 @@ import UIKit
 
 class PostCell: UITableViewCell {
     
-   
     let postTextLbl : UILabel = {
         let namelbl = UILabel()
         namelbl.translatesAutoresizingMaskIntoConstraints = false
@@ -29,84 +28,90 @@ class PostCell: UITableViewCell {
         un.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         un.textAlignment = .left
         un.backgroundColor = .green
-        
         return un
     }()
     
     
-    let PostImage : UIImageView = {
+    let postImage : UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.clipsToBounds = true
-        image.image = UIImage(named: "unnamed")
+//        image.image = UIImage(named: "unnamed")
         image.contentMode = .scaleAspectFill
         
         return image
     }()
+    
+    let userImg : UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 10
+        image.image = UIImage(named: "unnamed")
+        image.contentMode = .scaleAspectFit
 
-    let stackView : UIStackView = {
-
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.spacing = 10
-      return stack
+        return image
     }()
+
+//    let stackView : UIStackView = {
+//
+//        let stack = UIStackView()
+//        stack.translatesAutoresizingMaskIntoConstraints = false
+//        stack.axis = .vertical
+//        stack.distribution = .fillEqually
+//        stack.spacing = 10
+//      return stack
+//    }()
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
     }
+    
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         setUpView()
+        self.backgroundColor = .systemBrown
+        
     }
     
+    
     func setUpView(){
-//        self.addSubview(username)
-//        self.addSubview(postTextLbl)
-        self.addSubview(PostImage)
 
-        self.addSubview(stackView)
-        stackView.addArrangedSubview(username)
-        stackView.addArrangedSubview(postTextLbl)
-//        stackView.addArrangedSubview(PostImage)
-       
+        self.addSubview(postImage)
+        self.addSubview(userImg)
+        self.addSubview(username)
+        self.addSubview(postTextLbl)
         
         NSLayoutConstraint.activate([
-        
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-//            stackView.bottomAnchor.constraint(equalTo: PostImage.bottomAnchor, constant: -5)
             
             
-//            username.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-//            username.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 5),
-//            username.bottomAnchor.constraint(equalTo: PostImage.topAnchor, constant: 1),
-////            username.heightAnchor.constraint(equalTo: heightAnchor, constant: 10),
-//
-//            username.widthAnchor.constraint(equalTo: widthAnchor, constant: 150),
-//
-//            postTextLbl.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-//            postTextLbl.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
-//            postTextLbl.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
-//            postTextLbl.centerXAnchor.constraint(equalTo: centerXAnchor)
+            userImg.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            userImg.leftAnchor.constraint(equalTo: leftAnchor, constant: 5),
+            userImg.rightAnchor.constraint(equalTo: rightAnchor, constant: -340),
+            userImg.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -340),
+//            userImg.heightAnchor.constraint(equalTo: heightAnchor, constant: 40),
+//            userImg.widthAnchor.constraint(equalTo: widthAnchor, constant: 40),
+            
+            
+            postImage.topAnchor.constraint(equalTo: topAnchor,constant: 130),
+            postImage.rightAnchor.constraint(equalTo: rightAnchor, constant: -5),
+            postImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 5),
+            postImage.heightAnchor.constraint(equalToConstant: 200),
+            
+            
+            username.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            username.leftAnchor.constraint(equalTo: userImg.rightAnchor, constant: 10),
+            username.widthAnchor.constraint(equalTo: widthAnchor, constant: 10),
+            
+            
+            postTextLbl.topAnchor.constraint(equalTo: username.topAnchor, constant: 50),
+            postTextLbl.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
+            postTextLbl.rightAnchor.constraint(equalTo: rightAnchor, constant: -7),
+            
+            
         ])
-        
-        NSLayoutConstraint.activate([
-
-            PostImage.topAnchor.constraint(equalTo: stackView.bottomAnchor,constant: 20),
-            PostImage.rightAnchor.constraint(equalTo:rightAnchor, constant: -5),
-            PostImage.leftAnchor.constraint(equalTo:leftAnchor, constant: 5),
-            PostImage.heightAnchor.constraint(equalToConstant: 200),
-//            PostImage.heightAnchor.constraint(equalTo: heightAnchor, constant: 20),
-//            PostImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
-        ])
-        
         
     }
 }
