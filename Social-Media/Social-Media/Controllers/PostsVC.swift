@@ -10,13 +10,21 @@ import Alamofire
 import SwiftyJSON
 // اقدر اخذ (respose.value)واضعها داخل اوبجيكت او كلاس JSON جاي من سويفت جيسن
 
-class HomeVC: UIViewController {
+class PostsVC: UIViewController {
     
     var posts:[Post] = []
+    
     
     let cellID = "PostCell"
     let postTableView = UITableView()
     let headerview = UIView()
+    let allPost : UILabel = {
+      let lbl = UILabel()
+        lbl.textAlignment = .left
+        lbl.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        lbl.text = "All Posts"
+        return lbl
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,14 +33,21 @@ class HomeVC: UIViewController {
         
         view.addSubview(postTableView)
         view.addSubview(headerview)
+        view.addSubview(allPost)
         
-        headerview.backgroundColor = .systemGray6
-        postTableView.backgroundColor = .white
+        //هذي الخاصية تخفي الفواصل بين السل.
+        postTableView.separatorStyle = .none
+        // تخفي الظل من الصورة عند الضغط .
+//        postTableView.allowsSelection = false
+    
+        
+        headerview.backgroundColor = .systemBrown
+        postTableView.backgroundColor = .systemGray6
         postTableView.register(PostCell.self, forCellReuseIdentifier: cellID )
         
         headerview.translatesAutoresizingMaskIntoConstraints = false
         postTableView.translatesAutoresizingMaskIntoConstraints = false
-        
+        allPost.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             headerview.topAnchor.constraint(equalTo: view.topAnchor),
@@ -43,12 +58,17 @@ class HomeVC: UIViewController {
             postTableView.topAnchor.constraint(equalTo:view.topAnchor, constant: 200),
             postTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             postTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            postTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            postTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            allPost.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            allPost.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+            
         ])
         
         
         let appId = "6202a19d8e6ae0624211e23b"
         let url = "https://dummyapi.io/data/v1/post"
+        
         
         let headers: HTTPHeaders = [
             "app-id" : appId
@@ -74,7 +94,7 @@ class HomeVC: UIViewController {
     
 }
 
-extension HomeVC : UITableViewDelegate,UITableViewDataSource {
+extension PostsVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
@@ -84,7 +104,8 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource {
         let post = posts[indexPath.row]//يجيب لي البوست الحالي
         cell.postTextLbl.text = post.text// راح اعبيه في هذي الخلية
         
-        // the logic of filling the image frome url?
+        // the logic of filling the post image frome url?
+        
         //كيف اعرض صوره بالانترنت في imageView من رابط نوع string الي imageView كالتالي:
         //نحول الصورة الي URL
         let imageStringUrl = post.image
@@ -94,6 +115,19 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource {
             }
             
         }
+        //the logic of filling the user's image frim the url:
+        let userImageStringurl = post.owner.picture
+//        cell.userImg.layer.cornerRadius = cell.userImg.frame.width/3
+        if let url = URL(string: userImageStringurl){
+            
+            if let imageData = try? Data(contentsOf: url){
+                cell.userImg.image = UIImage(data: imageData)
+            }
+        }
+        
+        
+        
+        
         //--------------------------------------------------------شرح
         //        URL(string: <#T##String#>)
         //ثم نحول URLالي Data
@@ -102,13 +136,30 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource {
         //        cell.PostImage.image = UIImage(data: <#T##Data#>)
         //-------------------------------------------------------شرح
         
+        
+        
         //filling the user Data:
         cell.username.text = post.owner.firstName + " " + post.owner.lastName
-        
+        cell.likesLbl.text = String(post.likes)
         
         return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let selectedPost = posts[indexPath.row]
+        let vc = PostDetailsVC()
+    
+        vc.post = selectedPost
+        
+        navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 400
     }
+    
 }
+
+
+
