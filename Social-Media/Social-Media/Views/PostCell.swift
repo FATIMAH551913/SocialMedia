@@ -31,14 +31,14 @@ class PostCell: UITableViewCell {
         btn.attributedTitle(for: .normal)
         btn.titleLabel?.font = .systemFont(ofSize: 9, weight: .heavy)
         btn.titleLabel?.textAlignment = .center
-        btn.setTitle("m", for: .normal)
+        btn.setTitle(" ", for: .normal)
 //        btn.addTarget(self, action: #selector(likeCliked), for: .touchUpInside)
      return btn
     }()
     
     let likesLbl : UILabel = {
         let lbl = UILabel()
-        lbl.text = "5"
+//        lbl.text = "5"
         lbl.translatesAutoresizingMaskIntoConstraints = false
 
      return lbl
@@ -47,11 +47,10 @@ class PostCell: UITableViewCell {
     let username : UILabel = {
        let un = UILabel()
         un.textColor = .black
-//        un.text = "hi"
         un.translatesAutoresizingMaskIntoConstraints = false
         un.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         un.textAlignment = .left
-//        un.backgroundColor = .green
+
         return un
     }()
     
@@ -69,32 +68,27 @@ class PostCell: UITableViewCell {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.clipsToBounds = true
-        image.layer.cornerRadius = 20
+        image.layer.cornerRadius = 15
 //        image.image = UIImage(named: "unnamed")
         image.contentMode = .scaleToFill
-        
         
         return image
     }()
     
     
-//    let backView : UIView = {
-//        var view = UIView()
-////            didSet{
-////                view.layer.shadowColor = UIColor.gray.cgColor
-////                view.layer.shadowOpacity = 0.5 //مقدار شفافية الظل من ١-الي ٠
-////       view.layer.shadowColor = UIColor.gray.cgColor
-////        view.layer.shadowOffset = CGSize(width: 0, height: 10)
-////        view.layer.shadowRadius = 10   //مقدار تجمع الظل
-////                           view.layer.shadowOpacity = 0.5 //مقدار شفافية الظل من ١-الي ٠
-////        view.layer.cornerRadius = 7
-////
-////            }
-//
-//
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//      return view
-//    }()
+    let contentbackView : UIView = {
+        var view = UIView()
+        view.layer.shadowColor = UIColor.gray.cgColor
+        view.layer.shadowOpacity = 0.5 //مقدار شفافية الظل من ١-الي ٠
+        view.layer.shadowColor = UIColor.gray.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 10)
+        view.layer.shadowRadius = 10   //مقدار تجمع الظل
+        view.layer.shadowOpacity = 0.7 //مقدار شفافية الظل من ١-الي ٠
+        view.layer.cornerRadius = 7
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
 
 //    let userStackView : UIStackView = {
 //        let stack = UIStackView()
@@ -132,22 +126,12 @@ class PostCell: UITableViewCell {
 //        
 //    }
     
-   
-    
-    
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         setUpView()
-        
-        contentView.addSubview(postStackView)
-        contentView.addSubview(username)
-        contentView.addSubview(userImg)
-     
-//        setUpBackView()
-//        self.backgroundColor = .systemBrown
-        
-        
+
+        self.backgroundColor = .white
         
     }
     
@@ -168,6 +152,7 @@ class PostCell: UITableViewCell {
     func setUpView(){
     
 //        self.addSubview(postImage)
+        self.addSubview(contentbackView)
         self.addSubview(userImg)
         self.addSubview(username)
         self.addSubview(likesBtn)
@@ -187,28 +172,29 @@ class PostCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             
-//
-//            userStackView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-//            userStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
-//            userStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -30),
-//            userStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -340),
+
+            contentbackView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            contentbackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
+            contentbackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
+            contentbackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            
             
             postStackView.topAnchor.constraint(equalTo: username.topAnchor, constant: 70),
-            postStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
-            postStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20),
-            postStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -70),
+            postStackView.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 20),
+            postStackView.rightAnchor.constraint(equalTo: contentbackView.rightAnchor, constant: -20),
+            postStackView.bottomAnchor.constraint(equalTo: contentbackView.bottomAnchor, constant: -70),
             
             likesBtn.topAnchor.constraint(equalTo: postStackView.bottomAnchor, constant: 10),
-            likesBtn.leftAnchor.constraint(equalTo: leftAnchor, constant: 30),
+            likesBtn.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 30),
             
             likesLbl.topAnchor.constraint(equalTo: postStackView.bottomAnchor, constant: 10),
             likesLbl.leftAnchor.constraint(equalTo: likesBtn.rightAnchor, constant: 10),
             
 
-            userImg.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-            userImg.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
-            userImg.rightAnchor.constraint(equalTo: rightAnchor, constant: -330),
-            userImg.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -330),
+            userImg.topAnchor.constraint(equalTo: contentbackView.topAnchor, constant: 15),
+            userImg.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 15),
+            userImg.rightAnchor.constraint(equalTo: contentbackView.rightAnchor, constant: -330),
+            userImg.bottomAnchor.constraint(equalTo: contentbackView.bottomAnchor, constant: -330),
             
 //
 //            postImage.topAnchor.constraint(equalTo: topAnchor,constant: 145),
@@ -217,9 +203,9 @@ class PostCell: UITableViewCell {
 //            postImage.heightAnchor.constraint(equalToConstant: 200),
             
 
-            username.topAnchor.constraint(equalTo: topAnchor, constant: 30),
+            username.topAnchor.constraint(equalTo: contentbackView.topAnchor, constant: 30),
             username.leftAnchor.constraint(equalTo: userImg.rightAnchor, constant: 20),
-            username.widthAnchor.constraint(equalTo: widthAnchor, constant: 10),
+            username.widthAnchor.constraint(equalTo: contentbackView.widthAnchor, constant: 10),
             
 //            
 //            postTextLbl.topAnchor.constraint(equalTo: userStackView.topAnchor, constant: 50),

@@ -21,11 +21,12 @@ class PostDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
-        usernameLabel.text = post.owner.firstName + "" + post.owner.lastName
+        view.backgroundColor = .systemGray3
+        usernameLabel.text = post.owner.firstName + " " + post.owner.lastName
         postTextLabel.text = post.text
         likesLabel.text = String(post.text)
-        
+        postImageView.image = UIImage(named: post.image)
+//        userImgView.image = post.owner.picture
         
         
         setUpUI()
@@ -35,13 +36,21 @@ class PostDetailsVC: UIViewController {
     func setUpUI(){
         contentView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(contentView)
-        contentView.backgroundColor = .yellow
+        contentView.backgroundColor = .white
+        contentView.layer.shadowColor = UIColor.gray.cgColor
+        contentView.layer.shadowOpacity = 0.5 //مقدار شفافية الظل من ١-الي ٠
+        contentView.layer.shadowColor = UIColor.gray.cgColor
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 10)
+        contentView.layer.shadowRadius = 10   //مقدار تجمع الظل
+        contentView.layer.shadowOpacity = 0.5 //مقدار شفافية الظل من ١-الي ٠
+        contentView.layer.cornerRadius = 7
+        
+        
         NSLayoutConstraint.activate([
-            
-            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            contentView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            contentView.topAnchor.constraint(equalTo: view.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            contentView.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -8),
+            contentView.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 8),
+            contentView.topAnchor.constraint(equalTo: view.topAnchor,constant: 100),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -200)
         ])
         
         contentView.addSubview(userImgView)
@@ -63,28 +72,27 @@ class PostDetailsVC: UIViewController {
         contentView.addSubview(postImageView)
         postImageView.translatesAutoresizingMaskIntoConstraints = false
     
-     
-        
         contentView.addSubview(likesBotton)
         likesBotton.translatesAutoresizingMaskIntoConstraints = false
         likesBotton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
         likesBotton.tintColor = .blue
-        
-        
+    
         contentView.addSubview(likesLabel)
         likesLabel.translatesAutoresizingMaskIntoConstraints = false
+        likesLabel.textAlignment = .center
+        likesLabel.text = "5"
         
         let constraints = [
         
-            postTextLabel.topAnchor.constraint(equalTo: usernameLabel.topAnchor, constant: 70),
+            postTextLabel.topAnchor.constraint(equalTo: usernameLabel.topAnchor, constant: 10),
             postTextLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
             postTextLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
-            postTextLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -70),
+            postTextLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -300),
             
             
-            likesBotton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10),
+            likesBotton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             likesBotton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 30),
-            likesLabel.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10),
+            likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             likesLabel.leftAnchor.constraint(equalTo: likesBotton.rightAnchor, constant: 10),
             
 
@@ -101,7 +109,6 @@ class PostDetailsVC: UIViewController {
         ]
         
         NSLayoutConstraint.activate(constraints)
-        
     }
     
 }
