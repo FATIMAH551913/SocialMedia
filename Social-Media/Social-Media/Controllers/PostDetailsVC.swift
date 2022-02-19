@@ -6,10 +6,16 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class PostDetailsVC: UIViewController {
-    var post: Post!
+  
     
+    var post: Post!
+    var coomments:[Comment] = []
+    
+    let cellID = "CommentCell"
     let contentView = UIView()
     let usernameLabel = UILabel()
     let userImgView = UIImageView()
@@ -17,10 +23,17 @@ class PostDetailsVC: UIViewController {
     let postTextLabel = UILabel()
     let likesBotton = UIButton()
     let likesLabel = UILabel()
+    let commentsTableView = UITableView()
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        commentsTableView.delegate = self
+        commentsTableView.dataSource = self
+        commentsTableView.register(CommentCell.self, forCellReuseIdentifier: cellID)
+        
+        
         view.backgroundColor = .systemGray3
         usernameLabel.text = post.owner.firstName + " " + post.owner.lastName
         postTextLabel.text = post.text
@@ -28,15 +41,43 @@ class PostDetailsVC: UIViewController {
         postImageView.image = UIImage(named: post.image)
 //        userImgView.image = post.owner.picture
         
-        
         setUpUI()
-       
+        // getting the comments of the post from the API
+//        let url = "https://dummyapi.io/data/v1/post/60d21af267d0d8992e610b8d/comment"
+        let url = "https://dummyapi.io/data/v1/post/\(post.id)/comment"
+        let appId = "6202a19d8e6ae0624211e23b"
+        
+        
+        let headers: HTTPHeaders = [
+            "app-id" : appId
+        ]
+        AF.request(url, headers: headers).responseJSON { response in
+            //            print(response.value)
+            //نستخدم منغير اسمه جيسنداتا من سويفتي جيسن
+            let jsonData = JSON(response.value)
+            let data = jsonData["data"]
+            //Decoding :
+            let decoder = JSONDecoder()
+            do {
+                self.coomments = try decoder.decode([Comment].self, from: data.rawData())
+                self.commentsTableView.reloadData()
+                
+            }catch let error {
+                // تعريف الايرور هنا يفيدني انه راح يحدد لي ايش نوع الخطآ بالتحديد اوضح من ايرور شكل سترنق .
+                print(error)
+            }
+
+        }
     }
     
     func setUpUI(){
         contentView.translatesAutoresizingMaskIntoConstraints = false
+        commentsTableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(contentView)
+        view.addSubview(commentsTableView)
         contentView.backgroundColor = .white
+        commentsTableView.backgroundColor = .white
+        
         contentView.layer.shadowColor = UIColor.gray.cgColor
         contentView.layer.shadowOpacity = 0.5 //مقدار شفافية الظل من ١-الي ٠
         contentView.layer.shadowColor = UIColor.gray.cgColor
@@ -50,7 +91,13 @@ class PostDetailsVC: UIViewController {
             contentView.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -8),
             contentView.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 8),
             contentView.topAnchor.constraint(equalTo: view.topAnchor,constant: 100),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -200)
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -300),
+            
+            commentsTableView.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -8),
+            commentsTableView.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 8),
+            commentsTableView.topAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 10 ),
+            commentsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -10),
+            
         ])
         
         contentView.addSubview(userImgView)
@@ -113,5 +160,22 @@ class PostDetailsVC: UIViewController {
     
 }
 
-
+extension PostDetailsVC: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        coomments.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! CommentCell
+        cell.lblComment.text = coomments[indexPath.row].message
+        
+        
+        
+        return cell
+    }
+    
+    
+    
+    
+}
 
