@@ -14,7 +14,6 @@ class CommentCell: UITableViewCell {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textAlignment = .center
         $0.textColor = .black
-        
         return $0
     }(UILabel())
     
@@ -30,10 +29,11 @@ class CommentCell: UITableViewCell {
         // Configure the view for the selected state
         self.addSubview(lblComment)
         NSLayoutConstraint.activate([
-            lblComment.topAnchor.constraint(equalTo: topAnchor),
+            lblComment.topAnchor.constraint(equalTo: topAnchor,constant: 20),
             lblComment.rightAnchor.constraint(equalTo: rightAnchor),
             lblComment.leftAnchor.constraint(equalTo: leftAnchor),
-            lblComment.bottomAnchor.constraint(equalTo: bottomAnchor)
+            lblComment.bottomAnchor.constraint(equalTo: bottomAnchor,constant: 30),
+            lblComment.heightAnchor.constraint(equalTo: heightAnchor, constant: 120)
         
         
         ])

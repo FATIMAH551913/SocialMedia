@@ -13,7 +13,7 @@ class PostDetailsVC: UIViewController {
   
     
     var post: Post!
-    var coomments:[Comment] = []
+    var comments:[Comment] = []
     
     let cellID = "CommentCell"
     let contentView = UIView()
@@ -24,6 +24,8 @@ class PostDetailsVC: UIViewController {
     let likesBotton = UIButton()
     let likesLabel = UILabel()
     let commentsTableView = UITableView()
+    let scrollView = UIScrollView()
+    let contentViewScroll = UIView()
    
     
     override func viewDidLoad() {
@@ -44,7 +46,7 @@ class PostDetailsVC: UIViewController {
         setUpUI()
         // getting the comments of the post from the API
 //        let url = "https://dummyapi.io/data/v1/post/60d21af267d0d8992e610b8d/comment"
-        let url = "https://dummyapi.io/data/v1/post/\(post.id)/comment"
+        let url = "https://dummyapi.io/data/v1/post/\(post.id)/comment" // اسمها سكيب للستنرنق
         let appId = "6202a19d8e6ae0624211e23b"
         
         
@@ -59,7 +61,7 @@ class PostDetailsVC: UIViewController {
             //Decoding :
             let decoder = JSONDecoder()
             do {
-                self.coomments = try decoder.decode([Comment].self, from: data.rawData())
+                self.comments = try decoder.decode([Comment].self, from: data.rawData())
                 self.commentsTableView.reloadData()
                 
             }catch let error {
@@ -70,11 +72,20 @@ class PostDetailsVC: UIViewController {
         }
     }
     
+    
+    
     func setUpUI(){
+        contentViewScroll.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         commentsTableView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(contentView)
-        view.addSubview(commentsTableView)
+        contentViewScroll.addSubview(contentView)
+        contentViewScroll.addSubview(commentsTableView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentViewScroll)
+        
+        scrollView.backgroundColor = .white
+        contentViewScroll.backgroundColor = .white
         contentView.backgroundColor = .white
         commentsTableView.backgroundColor = .white
         
@@ -88,15 +99,33 @@ class PostDetailsVC: UIViewController {
         
         
         NSLayoutConstraint.activate([
-            contentView.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -8),
-            contentView.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 8),
-            contentView.topAnchor.constraint(equalTo: view.topAnchor,constant: 100),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -300),
+            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            commentsTableView.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -8),
-            commentsTableView.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 8),
+            contentViewScroll.rightAnchor.constraint(equalTo: scrollView.rightAnchor),
+            contentViewScroll.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
+            contentViewScroll.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentViewScroll.heightAnchor.constraint(equalTo: scrollView.heightAnchor, constant: 600),
+            contentViewScroll.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentViewScroll.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            
+        ])
+        
+        NSLayoutConstraint.activate([
+            contentView.rightAnchor.constraint(equalTo: contentViewScroll.rightAnchor,constant: -8),
+            contentView.leftAnchor.constraint(equalTo: contentViewScroll.leftAnchor,constant: 8),
+            contentView.topAnchor.constraint(equalTo: contentViewScroll.topAnchor,constant: 10),
+            contentView.bottomAnchor.constraint(equalTo: contentViewScroll.bottomAnchor,constant: -1000),
+//            contentView.heightAnchor.constraint(equalTo: contentViewScroll.heightAnchor, constant: 100),
+            
+            
+            commentsTableView.rightAnchor.constraint(equalTo: contentViewScroll.rightAnchor,constant: -8),
+            commentsTableView.leftAnchor.constraint(equalTo: contentViewScroll.leftAnchor,constant: 8),
             commentsTableView.topAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 10 ),
-            commentsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -10),
+            commentsTableView.bottomAnchor.constraint(equalTo: contentViewScroll.bottomAnchor,constant: -10),
+            
             
         ])
         
@@ -162,20 +191,17 @@ class PostDetailsVC: UIViewController {
 
 extension PostDetailsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        coomments.count
+        comments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! CommentCell
-        cell.lblComment.text = coomments[indexPath.row].message
+        cell.lblComment.text = comments[indexPath.row].message
         
         
         
         return cell
     }
-    
-    
-    
     
 }
 
