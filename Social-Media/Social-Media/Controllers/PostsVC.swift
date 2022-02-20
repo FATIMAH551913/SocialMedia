@@ -109,21 +109,11 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
         //كيف اعرض صوره بالانترنت في imageView من رابط نوع string الي imageView كالتالي:
         //نحول الصورة الي URL
         let imageStringUrl = post.image
-        if let url = URL(string: imageStringUrl) {
-            if let imageData = try? Data(contentsOf: url){
-                cell.postImage.image = UIImage(data: imageData)
-            }
-            
-        }
+        cell.postImage.setImageFromStringUrl(stringUrl: imageStringUrl)
         //the logic of filling the user's image frim the url:
         let userImageStringurl = post.owner.picture
-//        cell.userImg.layer.cornerRadius = cell.userImg.frame.width/3
-        if let url = URL(string: userImageStringurl){
-            
-            if let imageData = try? Data(contentsOf: url){
-                cell.userImg.image = UIImage(data: imageData)
-            }
-        }
+        cell.userImg.setImageFromStringUrl(stringUrl: userImageStringurl)
+//        cell.userImg.makeCircularImage()
         
         
         

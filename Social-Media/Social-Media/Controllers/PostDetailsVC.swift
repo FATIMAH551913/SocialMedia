@@ -41,7 +41,9 @@ class PostDetailsVC: UIViewController {
         postTextLabel.text = post.text
         likesLabel.text = String(post.text)
         postImageView.image = UIImage(named: post.image)
-//        userImgView.image = post.owner.picture
+        userImgView.setImageFromStringUrl(stringUrl: post.owner.picture)
+        userImgView.makeCircularImage()
+        postImageView.setImageFromStringUrl(stringUrl: post.image)
         
         setUpUI()
         // getting the comments of the post from the API
@@ -75,6 +77,7 @@ class PostDetailsVC: UIViewController {
     
     
     func setUpUI(){
+        
         contentViewScroll.translatesAutoresizingMaskIntoConstraints = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -159,25 +162,28 @@ class PostDetailsVC: UIViewController {
         likesLabel.text = "5"
         
         let constraints = [
+            
+            postImageView.topAnchor.constraint(equalTo: postTextLabel.topAnchor, constant: 100),
+            postImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
+            postImageView.rightAnchor.constraint(equalTo:contentView.rightAnchor, constant: -10),
+            postImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50),
         
             postTextLabel.topAnchor.constraint(equalTo: usernameLabel.topAnchor, constant: 10),
             postTextLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
             postTextLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
             postTextLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -300),
             
-            
             likesBotton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             likesBotton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 30),
             likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             likesLabel.leftAnchor.constraint(equalTo: likesBotton.rightAnchor, constant: 10),
             
-
             userImgView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             userImgView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 15),
-            userImgView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -330),
-            userImgView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -330),
+            userImgView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -320),
+            userImgView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -380),
 
-
+            
             usernameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30),
             usernameLabel.leftAnchor.constraint(equalTo: userImgView.rightAnchor, constant: 20),
             usernameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: 10),
@@ -196,12 +202,18 @@ extension PostDetailsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! CommentCell
-        cell.lblComment.text = comments[indexPath.row].message
-        
+       let currentComment = comments[indexPath.row]
+        cell.lblComment.text = currentComment.message
+        cell.usernameComment.text = currentComment.owner.firstName + " " + currentComment.owner.lastName
+        let userImageStringurl = currentComment.owner.picture
+        cell.userImgComment.setImageFromStringUrl(stringUrl: userImageStringurl)
+//        cell.userImgComment.makeCircularImage()
         
         
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 107
+    }
 }
 

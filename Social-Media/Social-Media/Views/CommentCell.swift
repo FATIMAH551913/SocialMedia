@@ -10,10 +10,29 @@ import UIKit
 class CommentCell: UITableViewCell {
 
     let lblComment : UILabel = {
-        $0.text = "text"
+//        $0.text = "text"
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.textAlignment = .center
+        $0.textAlignment = .left
         $0.textColor = .black
+        $0.numberOfLines = 0
+        return $0
+    }(UILabel())
+    
+    let userImgComment : UIImageView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 17
+//        $0.image = UIImage(systemName: "person.fill")
+        $0.contentMode = .scaleToFill
+        return $0
+    }(UIImageView())
+    
+    let usernameComment : UILabel = {
+        $0.textColor = .black
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        $0.textAlignment = .left
+//        $0.text = "Text"
         return $0
     }(UILabel())
     
@@ -28,13 +47,25 @@ class CommentCell: UITableViewCell {
 
         // Configure the view for the selected state
         self.addSubview(lblComment)
-        NSLayoutConstraint.activate([
-            lblComment.topAnchor.constraint(equalTo: topAnchor,constant: 20),
-            lblComment.rightAnchor.constraint(equalTo: rightAnchor),
-            lblComment.leftAnchor.constraint(equalTo: leftAnchor),
-            lblComment.bottomAnchor.constraint(equalTo: bottomAnchor,constant: 30),
-            lblComment.heightAnchor.constraint(equalTo: heightAnchor, constant: 120)
+        self.addSubview(usernameComment)
+        self.addSubview(userImgComment)
         
+        NSLayoutConstraint.activate([
+            
+            lblComment.topAnchor.constraint(equalTo: userImgComment.topAnchor,constant: 20),
+            lblComment.rightAnchor.constraint(equalTo: rightAnchor,constant: -10),
+            lblComment.leftAnchor.constraint(equalTo: leftAnchor,constant: 25),
+            lblComment.bottomAnchor.constraint(equalTo: bottomAnchor,constant: -10),
+            
+            userImgComment.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            userImgComment.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
+            userImgComment.rightAnchor.constraint(equalTo: rightAnchor, constant: -325),
+            userImgComment.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -57),
+
+            usernameComment.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            usernameComment.leftAnchor.constraint(equalTo: userImgComment.rightAnchor, constant: 15),
+            usernameComment.widthAnchor.constraint(equalTo: widthAnchor, constant: 70),
+            
         
         ])
         

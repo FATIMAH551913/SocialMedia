@@ -178,7 +178,6 @@ class PostCell: UITableViewCell {
             contentbackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
             contentbackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
-            
             postStackView.topAnchor.constraint(equalTo: username.topAnchor, constant: 70),
             postStackView.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 20),
             postStackView.rightAnchor.constraint(equalTo: contentbackView.rightAnchor, constant: -20),
