@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import NVActivityIndicatorView
 
 class PostDetailsVC: UIViewController {
   
@@ -16,7 +17,8 @@ class PostDetailsVC: UIViewController {
     var comments:[Comment] = []
     
     let cellID = "CommentCell"
-    let contentView = UIView()
+    let contentView = ShadowView()
+    let containerViewTV = ShadowView()
     let usernameLabel = UILabel()
     let userImgView = UIImageView()
     let postImageView = UIImageView()
@@ -26,6 +28,7 @@ class PostDetailsVC: UIViewController {
     let commentsTableView = UITableView()
     let scrollView = UIScrollView()
     let contentViewScroll = UIView()
+    let loding = UIActivityIndicatorView()
    
     
     override func viewDidLoad() {
@@ -34,7 +37,6 @@ class PostDetailsVC: UIViewController {
         commentsTableView.delegate = self
         commentsTableView.dataSource = self
         commentsTableView.register(CommentCell.self, forCellReuseIdentifier: cellID)
-        
         
         view.backgroundColor = .systemGray3
         usernameLabel.text = post.owner.firstName + " " + post.owner.lastName
@@ -55,7 +57,9 @@ class PostDetailsVC: UIViewController {
         let headers: HTTPHeaders = [
             "app-id" : appId
         ]
-        AF.request(url, headers: headers).responseJSON { response in
+        loding.startAnimating()
+        AF.request(url, headers: headers).responseJSON { [self] response in
+            loding.stopAnimating()
             //            print(response.value)
             //نستخدم منغير اسمه جيسنداتا من سويفتي جيسن
             let jsonData = JSON(response.value)
@@ -77,28 +81,27 @@ class PostDetailsVC: UIViewController {
     
     
     func setUpUI(){
-        
+        loding.translatesAutoresizingMaskIntoConstraints = false
         contentViewScroll.translatesAutoresizingMaskIntoConstraints = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
+        containerViewTV.translatesAutoresizingMaskIntoConstraints = false
         commentsTableView.translatesAutoresizingMaskIntoConstraints = false
         contentViewScroll.addSubview(contentView)
-        contentViewScroll.addSubview(commentsTableView)
+        contentViewScroll.addSubview(containerViewTV)
+//        contentViewScroll.addSubview(commentsTableView)
+        containerViewTV.addSubview(commentsTableView)
         view.addSubview(scrollView)
+        containerViewTV.addSubview(loding)
         scrollView.addSubview(contentViewScroll)
         
         scrollView.backgroundColor = .white
-        contentViewScroll.backgroundColor = .white
+        loding.color = .blue
+        containerViewTV.backgroundColor = .white
+        contentViewScroll.backgroundColor = .yellow
         contentView.backgroundColor = .white
         commentsTableView.backgroundColor = .white
         
-        contentView.layer.shadowColor = UIColor.gray.cgColor
-        contentView.layer.shadowOpacity = 0.5 //مقدار شفافية الظل من ١-الي ٠
-        contentView.layer.shadowColor = UIColor.gray.cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 10)
-        contentView.layer.shadowRadius = 10   //مقدار تجمع الظل
-        contentView.layer.shadowOpacity = 0.5 //مقدار شفافية الظل من ١-الي ٠
-        contentView.layer.cornerRadius = 7
         
         
         NSLayoutConstraint.activate([
@@ -128,6 +131,17 @@ class PostDetailsVC: UIViewController {
             commentsTableView.leftAnchor.constraint(equalTo: contentViewScroll.leftAnchor,constant: 8),
             commentsTableView.topAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 10 ),
             commentsTableView.bottomAnchor.constraint(equalTo: contentViewScroll.bottomAnchor,constant: -10),
+            
+            loding.rightAnchor.constraint(equalTo: commentsTableView.rightAnchor,constant: -40),
+            loding.leftAnchor.constraint(equalTo: commentsTableView.leftAnchor, constant: 40),
+            loding.bottomAnchor.constraint(equalTo: containerViewTV.bottomAnchor, constant: -70),
+            loding.topAnchor.constraint(equalTo: commentsTableView.topAnchor, constant: 80),
+       
+            containerViewTV.rightAnchor.constraint(equalTo: commentsTableView.rightAnchor,constant: -8),
+            containerViewTV.leftAnchor.constraint(equalTo: commentsTableView.leftAnchor,constant: 8),
+            containerViewTV.topAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 10 ),
+            containerViewTV.bottomAnchor.constraint(equalTo: commentsTableView.bottomAnchor,constant: -10),
+//            containerViewTV.heightAnchor.constraint(equalTo: commentsTableView.heightAnchor, constant: 200)
             
             
         ])

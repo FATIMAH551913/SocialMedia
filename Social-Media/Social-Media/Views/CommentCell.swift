@@ -66,7 +66,6 @@ class CommentCell: UITableViewCell {
             usernameComment.leftAnchor.constraint(equalTo: userImgComment.rightAnchor, constant: 15),
             usernameComment.widthAnchor.constraint(equalTo: widthAnchor, constant: 70),
             
-        
         ])
         
     }

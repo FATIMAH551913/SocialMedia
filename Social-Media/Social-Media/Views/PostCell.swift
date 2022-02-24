@@ -10,7 +10,7 @@ import UIKit
 class PostCell: UITableViewCell {
     
 
-    
+    let contentbackView = ShadowView()
     let postTextLbl : UILabel = {
         let namelbl = UILabel()
         namelbl.translatesAutoresizingMaskIntoConstraints = false
@@ -76,19 +76,19 @@ class PostCell: UITableViewCell {
     }()
     
     
-    let contentbackView : UIView = {
-        var view = UIView()
-        view.layer.shadowColor = UIColor.gray.cgColor
-        view.layer.shadowOpacity = 0.5 //مقدار شفافية الظل من ١-الي ٠
-        view.layer.shadowColor = UIColor.gray.cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 10)
-        view.layer.shadowRadius = 10   //مقدار تجمع الظل
-        view.layer.shadowOpacity = 0.7 //مقدار شفافية الظل من ١-الي ٠
-        view.layer.cornerRadius = 7
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
-    }()
+   
+//        var view = UIView()
+//        view.layer.shadowColor = UIColor.gray.cgColor
+//        view.layer.shadowOpacity = 0.5 //مقدار شفافية الظل من ١-الي ٠
+//        view.layer.shadowColor = UIColor.gray.cgColor
+//        view.layer.shadowOffset = CGSize(width: 0, height: 10)
+//        view.layer.shadowRadius = 10   //مقدار تجمع الظل
+//        view.layer.shadowOpacity = 0.7 //مقدار شفافية الظل من ١-الي ٠
+//        view.layer.cornerRadius = 7
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.backgroundColor = .white
+//        return view
+//    }()
 
 //    let userStackView : UIStackView = {
 //        let stack = UIStackView()
@@ -157,6 +157,7 @@ class PostCell: UITableViewCell {
         self.addSubview(username)
         self.addSubview(likesBtn)
         self.addSubview(likesLbl)
+        contentbackView.translatesAutoresizingMaskIntoConstraints = false
 //        self.addSubview(postTextLbl)
         
         

@@ -8,5 +8,5 @@ target 'Social-Media' do
   # Pods for Social-Media
     pod 'Alamofire', '~> 5.4'
     pod 'SwiftyJSON', '~> 4.0'
-
+    pod 'NVActivityIndicatorView'
 end

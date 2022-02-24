@@ -21,6 +21,7 @@
 		FA6F932D27B45F3500A8571D /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F932C27B45F3500A8571D /* PostCell.swift */; };
 		FA83F68427C2D63000901154 /* UIimage+StringUrlToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83F68327C2D63000901154 /* UIimage+StringUrlToImage.swift */; };
 		FA98AFC727B5BD3F00B08BC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98AFC627B5BD3F00B08BC5 /* User.swift */; };
+		FAD961D027C7573300DF5C88 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD961CF27C7573300DF5C88 /* ShadowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		FA6F932C27B45F3500A8571D /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		FA83F68327C2D63000901154 /* UIimage+StringUrlToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIimage+StringUrlToImage.swift"; sourceTree = "<group>"; };
 		FA98AFC627B5BD3F00B08BC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		FAD961CF27C7573300DF5C88 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			children = (
 				FA6F932C27B45F3500A8571D /* PostCell.swift */,
 				FA4E0D8927C11323007F130B /* CommentCell.swift */,
+				FAD961CF27C7573300DF5C88 /* ShadowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				FA3111A527B2D25E002F1885 /* AppDelegate.swift in Sources */,
 				FA3111A727B2D25E002F1885 /* SceneDelegate.swift in Sources */,
 				FA18BA2727BBD12800C4A266 /* PostDetailsVC.swift in Sources */,
+				FAD961D027C7573300DF5C88 /* ShadowView.swift in Sources */,
 				FA83F68427C2D63000901154 /* UIimage+StringUrlToImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

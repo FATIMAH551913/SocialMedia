@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import NVActivityIndicatorView
 // اقدر اخذ (respose.value)واضعها داخل اوبجيكت او كلاس JSON جاي من سويفت جيسن
 
 class PostsVC: UIViewController {
@@ -26,6 +27,9 @@ class PostsVC: UIViewController {
         return lbl
     }()
     
+    let loaderView = UIActivityIndicatorView()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         postTableView.delegate = self
@@ -34,6 +38,7 @@ class PostsVC: UIViewController {
         view.addSubview(postTableView)
         view.addSubview(headerview)
         view.addSubview(allPost)
+        view.addSubview(loaderView)
         
         //هذي الخاصية تخفي الفواصل بين السل.
         postTableView.separatorStyle = .none
@@ -42,14 +47,24 @@ class PostsVC: UIViewController {
     
         
         headerview.backgroundColor = .systemBrown
+        loaderView.color = .blue
+        loaderView.style = .medium
+    
+      
         postTableView.backgroundColor = .systemGray6
         postTableView.register(PostCell.self, forCellReuseIdentifier: cellID )
         
         headerview.translatesAutoresizingMaskIntoConstraints = false
         postTableView.translatesAutoresizingMaskIntoConstraints = false
         allPost.translatesAutoresizingMaskIntoConstraints = false
+        loaderView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
+            
+            loaderView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 120),
+            loaderView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 120),
+            
+            
             headerview.topAnchor.constraint(equalTo: view.topAnchor),
             headerview.leftAnchor.constraint(equalTo: view.leftAnchor),
             headerview.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -73,7 +88,11 @@ class PostsVC: UIViewController {
         let headers: HTTPHeaders = [
             "app-id" : appId
         ]
-        AF.request(url, headers: headers).responseJSON { response in
+        
+        loaderView.startAnimating()
+        
+        AF.request(url, headers: headers).responseJSON { [self] response in
+            loaderView.stopAnimating()
             //            print(response.value)
             //نستخدم منغير اسمه جيسنداتا من سويفتي جيسن
             let jsonData = JSON(response.value)
@@ -90,6 +109,7 @@ class PostsVC: UIViewController {
             print(data)
         }
         view.backgroundColor = .white
+   
     }
     
 }
