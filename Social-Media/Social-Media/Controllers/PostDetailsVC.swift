@@ -57,6 +57,8 @@ class PostDetailsVC: UIViewController {
         let headers: HTTPHeaders = [
             "app-id" : appId
         ]
+        
+        
         loding.startAnimating()
         AF.request(url, headers: headers).responseJSON { [self] response in
             loding.stopAnimating()
@@ -74,10 +76,8 @@ class PostDetailsVC: UIViewController {
                 // تعريف الايرور هنا يفيدني انه راح يحدد لي ايش نوع الخطآ بالتحديد اوضح من ايرور شكل سترنق .
                 print(error)
             }
-
         }
     }
-    
     
     
     func setUpUI(){
@@ -95,13 +95,13 @@ class PostDetailsVC: UIViewController {
         containerViewTV.addSubview(loding)
         scrollView.addSubview(contentViewScroll)
         
+        
         scrollView.backgroundColor = .white
         loding.color = .blue
         containerViewTV.backgroundColor = .white
         contentViewScroll.backgroundColor = .yellow
         contentView.backgroundColor = .white
         commentsTableView.backgroundColor = .white
-        
         
         
         NSLayoutConstraint.activate([

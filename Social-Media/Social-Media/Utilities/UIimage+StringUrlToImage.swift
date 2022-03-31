@@ -15,7 +15,6 @@ extension UIImageView {
         if let url = URL(string: stringUrl) {
             if let imageData = try? Data(contentsOf: url){
                self.image = UIImage(data: imageData)
-                
             }
             
         }
@@ -23,8 +22,17 @@ extension UIImageView {
     }
     
     func makeCircularImage(){
+        
                 self.layer.cornerRadius = self.frame.width/2
         
     }
     
 }
+
+//extension  UILabel {
+//
+//    self.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+//    self.textAlignment = .left
+//    self.textColor = .black
+//
+//}

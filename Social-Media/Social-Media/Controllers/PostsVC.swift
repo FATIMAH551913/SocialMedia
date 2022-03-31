@@ -20,7 +20,7 @@ class PostsVC: UIViewController {
     let postTableView = UITableView()
     let headerview = UIView()
     let allPost : UILabel = {
-      let lbl = UILabel()
+        let lbl = UILabel()
         lbl.textAlignment = .left
         lbl.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         lbl.text = "All Posts"
@@ -43,14 +43,14 @@ class PostsVC: UIViewController {
         //هذي الخاصية تخفي الفواصل بين السل.
         postTableView.separatorStyle = .none
         // تخفي الظل من الصورة عند الضغط .
-//        postTableView.allowsSelection = false
-    
+        //        postTableView.allowsSelection = false
+        
         
         headerview.backgroundColor = .systemBrown
         loaderView.color = .blue
         loaderView.style = .medium
-    
-      
+        
+        
         postTableView.backgroundColor = .systemGray6
         postTableView.register(PostCell.self, forCellReuseIdentifier: cellID )
         
@@ -109,7 +109,7 @@ class PostsVC: UIViewController {
             print(data)
         }
         view.backgroundColor = .white
-   
+        
     }
     
 }
@@ -121,9 +121,10 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID ) as! PostCell
+        
         let post = posts[indexPath.row]//يجيب لي البوست الحالي
         cell.postTextLbl.text = post.text// راح اعبيه في هذي الخلية
-        
+       
         // the logic of filling the post image frome url?
         
         //كيف اعرض صوره بالانترنت في imageView من رابط نوع string الي imageView كالتالي:
@@ -133,7 +134,9 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
         //the logic of filling the user's image frim the url:
         let userImageStringurl = post.owner.picture
         cell.userImg.setImageFromStringUrl(stringUrl: userImageStringurl)
-//        cell.userImg.makeCircularImage()
+        //        cell.userImg.makeCircularImage()
+        cell.addAction()
+        cell.delegate = self
         
         
         
@@ -154,11 +157,14 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
         
         return cell
     }
+    
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedPost = posts[indexPath.row]
         let vc = PostDetailsVC()
-    
+        
         vc.post = selectedPost
         
         navigationController?.pushViewController(vc, animated: true)
@@ -171,5 +177,30 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
     
 }
 
+extension PostsVC : PostCellDelegate {
+    
+    
+    func userProfileTapped(cell:UITableViewCell) {
+        print("I am here")
+        if let inedxPath = postTableView.indexPath(for: cell){
+            let post = posts[inedxPath.row]
+           
+            let vc = ProfileVC()
+            vc.user = post.owner
+            navigationController?.pushViewController(vc, animated: true)
+
+        }
+     
+    }
+    
+    
+    
+    
+}
+
+// شرح علي المطرفي للجيسن:
+// ١- اسوي سترنق من جيسن.
+//٢- اسوي دي كودنق.
+//٣- التايب كان عباره عن ستركت من نوع كودابل واستخدمنا اسم الستركت.
 
 

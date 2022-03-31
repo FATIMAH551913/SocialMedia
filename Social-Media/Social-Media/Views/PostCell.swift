@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol PostCellDelegate {
+    func userProfileTapped(cell:UITableViewCell)
+}
+
 class PostCell: UITableViewCell {
+   
+    
+    var delegate :PostCellDelegate? = nil
     
 
     let contentbackView = ShadowView()
@@ -40,17 +47,17 @@ class PostCell: UITableViewCell {
         let lbl = UILabel()
 //        lbl.text = "5"
         lbl.translatesAutoresizingMaskIntoConstraints = false
-
      return lbl
     }()
     
     let username : UILabel = {
        let un = UILabel()
+        
         un.textColor = .black
+//        un.addTarget(self, action: #selector(profileCliked), for: .touchUpInside)
         un.translatesAutoresizingMaskIntoConstraints = false
         un.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         un.textAlignment = .left
-
         return un
     }()
     
@@ -67,8 +74,10 @@ class PostCell: UITableViewCell {
     let userImg : UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
+//        image.addTarget(self, action: #selector(profileCliked), for: .touchUpInside)
         image.clipsToBounds = true
         image.layer.cornerRadius = 15
+//        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userStackViewTapped)))
 //        image.image = UIImage(named: "unnamed")
         image.contentMode = .scaleToFill
         
@@ -90,24 +99,26 @@ class PostCell: UITableViewCell {
 //        return view
 //    }()
 
-//    let userStackView : UIStackView = {
-//        let stack = UIStackView()
-//        stack.translatesAutoresizingMaskIntoConstraints = false
-//        stack.axis = .horizontal
-//        stack.distribution = .fillProportionally
-//        stack.spacing = 5
-//        return stack
-//    }()
+    var userStackView : UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.spacing = 5
+        
+//        stack.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userStackViewTapped)))// عبارة عن كلاس يلاحظ اي حدث يحدث علي ستاك فيو وهو   الكلاس الكبير الذي يندرج تحته مجموعة الكلاسات ترث من UIGestureRecogniz وكل كلاس يمثل حدث معين .
+        
+//         الاكشن الي بسوي (تابد) ما راح اسويه مباشرة من uigesterReco بل من كلاس يرث من UIGesterReco يسمي ب UItapGesterReco
+        return stack
+    }()
     
    
-//     let viw = UIView ()
-//
-//        viw.translatesAutoresizingMaskIntoConstraints = false
-//        return viw
-//    }()
+    func addAction()  {
+        userStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userStackViewTapped)))
+    }
+    
     
     let postStackView : UIStackView = {
-
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
@@ -120,11 +131,11 @@ class PostCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-//    @objc func likeCliked (){
-//        
-//        
-//        
-//    }
+// MARK: ACTION
+
+    @objc func userStackViewTapped(){
+        delegate?.userProfileTapped(cell: self)
+    }
     
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -166,9 +177,12 @@ class PostCell: UITableViewCell {
 //        userStackView.addArrangedSubview(username)
         
         self.addSubview(postStackView)
+        self.addSubview(userStackView)
+        userStackView.addArrangedSubview(userImg)
+        userStackView.addArrangedSubview(username)
         postStackView.addArrangedSubview(postTextLbl)
         postStackView.addArrangedSubview(postImage)
-        
+    
         
         
         NSLayoutConstraint.activate([
@@ -189,28 +203,25 @@ class PostCell: UITableViewCell {
             
             likesLbl.topAnchor.constraint(equalTo: postStackView.bottomAnchor, constant: 10),
             likesLbl.leftAnchor.constraint(equalTo: likesBtn.rightAnchor, constant: 10),
-            
 
-            userImg.topAnchor.constraint(equalTo: contentbackView.topAnchor, constant: 15),
-            userImg.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 15),
-            userImg.rightAnchor.constraint(equalTo: contentbackView.rightAnchor, constant: -330),
-            userImg.bottomAnchor.constraint(equalTo: contentbackView.bottomAnchor, constant: -330),
+            userStackView.topAnchor.constraint(equalTo: contentbackView.topAnchor, constant: 15),
+            userStackView.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 15),
+//            userStackView.widthAnchor.constraint(equalTo: contentbackView.widthAnchor, constant: 5),
+            userStackView.rightAnchor.constraint(equalTo: contentbackView.rightAnchor, constant: -90),
+            userStackView.bottomAnchor.constraint(equalTo: contentbackView.bottomAnchor, constant: -330),
+
             
+//            userImg.topAnchor.constraint(equalTo: contentbackView.topAnchor, constant: 15),
+//            userImg.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 15),
+//            userImg.rightAnchor.constraint(equalTo: contentbackView.rightAnchor, constant: -330),
+//            userImg.bottomAnchor.constraint(equalTo: contentbackView.bottomAnchor, constant: -330),
 //
-//            postImage.topAnchor.constraint(equalTo: topAnchor,constant: 145),
-//            postImage.rightAnchor.constraint(equalTo: rightAnchor, constant: -15),
-//            postImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
-//            postImage.heightAnchor.constraint(equalToConstant: 200),
+//
+//            username.topAnchor.constraint(equalTo: contentbackView.topAnchor, constant: 30),
+//            username.leftAnchor.constraint(equalTo: userImg.rightAnchor, constant: 20),
+//            username.widthAnchor.constraint(equalTo: contentbackView.widthAnchor, constant: 10),
             
 
-            username.topAnchor.constraint(equalTo: contentbackView.topAnchor, constant: 30),
-            username.leftAnchor.constraint(equalTo: userImg.rightAnchor, constant: 20),
-            username.widthAnchor.constraint(equalTo: contentbackView.widthAnchor, constant: 10),
-            
-//            
-//            postTextLbl.topAnchor.constraint(equalTo: userStackView.topAnchor, constant: 50),
-//            postTextLbl.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
-//            postTextLbl.rightAnchor.constraint(equalTo: rightAnchor, constant: -15),
             
             
         ])
@@ -219,8 +230,16 @@ class PostCell: UITableViewCell {
     
 }
 
+//
+//            postTextLbl.topAnchor.constraint(equalTo: userStackView.topAnchor, constant: 50),
+//            postTextLbl.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),
+//            postTextLbl.rightAnchor.constraint(equalTo: rightAnchor, constant: -15),
 
-
+//
+//            postImage.topAnchor.constraint(equalTo: topAnchor,constant: 145),
+//            postImage.rightAnchor.constraint(equalTo: rightAnchor, constant: -15),
+//            postImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
+//            postImage.heightAnchor.constraint(equalToConstant: 200),
 
 
 
