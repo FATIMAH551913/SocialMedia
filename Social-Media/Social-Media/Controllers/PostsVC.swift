@@ -63,7 +63,7 @@ class PostsVC: UIViewController {
             
             loaderView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 120),
             loaderView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 120),
-            
+            loaderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             headerview.topAnchor.constraint(equalTo: view.topAnchor),
             headerview.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -80,34 +80,13 @@ class PostsVC: UIViewController {
             
         ])
         
-        
-        let appId = "6202a19d8e6ae0624211e23b"
-        let url = "https://dummyapi.io/data/v1/post"
-        
-        
-        let headers: HTTPHeaders = [
-            "app-id" : appId
-        ]
-        
         loaderView.startAnimating()
-        
-        AF.request(url, headers: headers).responseJSON { [self] response in
-            loaderView.stopAnimating()
-            //            print(response.value)
-            //نستخدم منغير اسمه جيسنداتا من سويفتي جيسن
-            let jsonData = JSON(response.value)
-            let data = jsonData["data"]
-            //Decoding :
-            let decoder = JSONDecoder()
-            do {
-                self.posts = try decoder.decode([Post].self, from: data.rawData())
-                self.postTableView.reloadData()
-            }catch let error {
-                // تعريف الايرور هنا يفيدني انه راح يحدد لي ايش نوع الخطآ بالتحديد اوضح من ايرور شكل سترنق .
-                print(error)
-            }
-            print(data)
+        PostAPI.getAllPost { postsResponse in
+            self.posts = postsResponse
+            self.postTableView.reloadData()
+            self.loaderView.stopAnimating()
         }
+        
         view.backgroundColor = .white
         
     }
@@ -204,3 +183,31 @@ extension PostsVC : PostCellDelegate {
 //٣- التايب كان عباره عن ستركت من نوع كودابل واستخدمنا اسم الستركت.
 
 
+
+//        let appId = "6202a19d8e6ae0624211e23b"
+//        let url = "https://dummyapi.io/data/v1/post"
+//
+//
+//        let headers: HTTPHeaders = [
+//            "app-id" : appId
+//        ]
+//
+//        loaderView.startAnimating()
+//
+//        AF.request(url, headers: headers).responseJSON { [self] response in
+//            loaderView.stopAnimating()
+//            //            print(response.value)
+//            //نستخدم منغير اسمه جيسنداتا من سويفتي جيسن
+//            let jsonData = JSON(response.value)
+//            let data = jsonData["data"]
+//            //Decoding :
+//            let decoder = JSONDecoder()
+//            do {
+//                self.posts = try decoder.decode([Post].self, from: data.rawData())
+//                self.postTableView.reloadData()
+//            }catch let error {
+//                // تعريف الايرور هنا يفيدني انه راح يحدد لي ايش نوع الخطآ بالتحديد اوضح من ايرور شكل سترنق .
+//                print(error)
+//            }
+//            print(data)
+//        }

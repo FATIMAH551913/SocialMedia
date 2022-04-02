@@ -49,33 +49,12 @@ class PostDetailsVC: UIViewController {
         
         setUpUI()
         // getting the comments of the post from the API
-//        let url = "https://dummyapi.io/data/v1/post/60d21af267d0d8992e610b8d/comment"
-        let url = "https://dummyapi.io/data/v1/post/\(post.id)/comment" // اسمها سكيب للستنرنق
-        let appId = "6202a19d8e6ae0624211e23b"
-        
-        
-        let headers: HTTPHeaders = [
-            "app-id" : appId
-        ]
-        
-        
+
         loding.startAnimating()
-        AF.request(url, headers: headers).responseJSON { [self] response in
-            loding.stopAnimating()
-            //            print(response.value)
-            //نستخدم منغير اسمه جيسنداتا من سويفتي جيسن
-            let jsonData = JSON(response.value)
-            let data = jsonData["data"]
-            //Decoding :
-            let decoder = JSONDecoder()
-            do {
-                self.comments = try decoder.decode([Comment].self, from: data.rawData())
-                self.commentsTableView.reloadData()
-                
-            }catch let error {
-                // تعريف الايرور هنا يفيدني انه راح يحدد لي ايش نوع الخطآ بالتحديد اوضح من ايرور شكل سترنق .
-                print(error)
-            }
+        PostAPI.getPostComment(id: post.id) { commentsResponse in
+            self.comments = commentsResponse
+            self.commentsTableView.reloadData()
+            self.loding.stopAnimating()
         }
     }
     
