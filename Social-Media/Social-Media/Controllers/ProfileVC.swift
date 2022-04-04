@@ -155,7 +155,7 @@ class ProfileVC: UIViewController {
     func setUpUI(){
         
         profileUsername.text = user.firstName + " " + user.lastName
-        profileImageView.setImageFromStringUrl(stringUrl: user.picture)
+        profileImageView.setImageFromStringUrl(stringUrl: user.picture!)
         profileEmail.text = user.email
         profileNumber.text = user.phone
         profileGender.text = user.gender

@@ -112,7 +112,7 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
         cell.postImage.setImageFromStringUrl(stringUrl: imageStringUrl)
         //the logic of filling the user's image frim the url:
         let userImageStringurl = post.owner.picture
-        cell.userImg.setImageFromStringUrl(stringUrl: userImageStringurl)
+        cell.userImg.setImageFromStringUrl(stringUrl: userImageStringurl!)
         //        cell.userImg.makeCircularImage()
         cell.addAction()
         cell.delegate = self

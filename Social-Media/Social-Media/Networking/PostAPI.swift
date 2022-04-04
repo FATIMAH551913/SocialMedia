@@ -32,7 +32,7 @@ class PostAPI:API {
     
     static func getPostComment(id: String , complitionHandler: @escaping ([Comment]) -> () ){
         let url = "\(baseURL)/post/\(id)/comment" // اسمها سكيب للستنرنق
-        AF.request(url, headers: headers).responseJSON { [self] response in
+        AF.request(url, headers: headers).responseJSON { response in
             let jsonData = JSON(response.value)
             let data = jsonData["data"]
             //Decoding :

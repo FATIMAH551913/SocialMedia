@@ -43,7 +43,7 @@ class PostDetailsVC: UIViewController {
         postTextLabel.text = post.text
         likesLabel.text = String(post.text)
         postImageView.image = UIImage(named: post.image)
-        userImgView.setImageFromStringUrl(stringUrl: post.owner.picture)
+        userImgView.setImageFromStringUrl(stringUrl: post.owner.picture!)
         userImgView.makeCircularImage()
         postImageView.setImageFromStringUrl(stringUrl: post.image)
         
@@ -199,7 +199,7 @@ extension PostDetailsVC: UITableViewDelegate, UITableViewDataSource {
         cell.lblComment.text = currentComment.message
         cell.usernameComment.text = currentComment.owner.firstName + " " + currentComment.owner.lastName
         let userImageStringurl = currentComment.owner.picture
-        cell.userImgComment.setImageFromStringUrl(stringUrl: userImageStringurl)
+        cell.userImgComment.setImageFromStringUrl(stringUrl: userImageStringurl!)
 //        cell.userImgComment.makeCircularImage()
         
         

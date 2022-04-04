@@ -26,4 +26,39 @@ class UserAPI:API {
             }
         }
     }
+    
+    static func RegesterNewUser(firstName: String, lastName:String, email:String, complitionHandler: @escaping(User?, String?) -> ()){
+      
+        let url = "\(baseURL)/user/create"
+        let params = [
+             "firstName" : firstName,
+             "lastName" : lastName,
+             "email" : email
+        ]
+     
+        AF.request(url, method: .post , parameters: params, encoder: JSONParameterEncoder.default , headers: headers).validate().responseJSON { response in
+           
+            switch response.result{
+                
+                
+            case .success:
+                let jsonData = JSON(response.value)
+                print(jsonData)
+                let decoder = JSONDecoder()
+                do {
+                   let user = try decoder.decode(User.self, from: jsonData.rawData())
+                 complitionHandler(user, nil)
+                }catch let error {
+                    print(error)
+                }
+            case .failure(let error):
+                let jsonData = JSON(response.data)
+                let data = jsonData["data"]
+                let emailError = data["email"].stringValue
+                complitionHandler(nil, emailError)
+               
+            }
+            
+        }
+    }
 }
