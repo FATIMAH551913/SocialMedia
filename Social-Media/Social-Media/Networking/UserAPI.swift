@@ -22,7 +22,7 @@ class UserAPI:API {
                let user = try decoder.decode(User.self, from: jsonData.rawData())
              complitionHandler(user)
             }catch let error {
-                print(error)
+//                print(error)
             }
         }
     }
@@ -43,19 +43,77 @@ class UserAPI:API {
                 
             case .success:
                 let jsonData = JSON(response.value)
-                print(jsonData)
+//                print(jsonData)
                 let decoder = JSONDecoder()
                 do {
                    let user = try decoder.decode(User.self, from: jsonData.rawData())
                  complitionHandler(user, nil)
                 }catch let error {
-                    print(error)
+//                    print(error)
                 }
             case .failure(let error):
                 let jsonData = JSON(response.data)
                 let data = jsonData["data"]
                 let emailError = data["email"].stringValue
-                complitionHandler(nil, emailError)
+                let firstNameError = data["firstName"].stringValue
+                let lastNameError = data["lastName"].stringValue
+                let messageErorr = firstNameError + " " + lastNameError + " " + emailError
+                complitionHandler(nil, messageErorr)
+               
+            }
+            
+        }
+    }
+    
+    static func SignInUser(firstName: String, lastName:String, complitionHandler: @escaping(User?, String?) -> ()){
+      
+        let url = "\(baseURL)/user"
+        let params = [
+            "Created" : "1"
+        ]
+     
+        AF.request(url, method: .get , parameters: params, encoder: URLEncodedFormParameterEncoder.default , headers: headers).validate().responseJSON { response in
+           
+            switch response.result{
+                
+            case .success:
+                let jsonData = JSON(response.value)
+                let data = jsonData["data"]
+                print(jsonData)
+                let decoder = JSONDecoder()
+                do {
+                   let users = try decoder.decode([User].self, from: data.rawData())
+                 
+                    var founUser:User?
+                    
+                    for user in users {
+                        if user.firstName == firstName && user.lastName == lastName {
+                            founUser = user
+                            break
+                        }
+                        
+                    }
+                    
+                    if let user = founUser {
+                        complitionHandler(founUser, nil)
+                    }else{
+                        complitionHandler(nil , "The firstname or the lasteName don't match any user ")
+                    }
+//                 complitionHandler(user, nil)
+                    
+                    
+                }catch let error {
+                    print(error)
+                   
+                }
+            case .failure(let error):
+                let jsonData = JSON(response.data)
+                let data = jsonData["data"]
+               
+                let firstNameError = data["firstName"].stringValue
+                let lastNameError = data["lastName"].stringValue
+                let messageErorr = firstNameError + " " + lastNameError
+                complitionHandler(nil, messageErorr)
                
             }
             

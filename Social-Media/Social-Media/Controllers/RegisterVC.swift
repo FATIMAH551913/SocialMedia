@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SignUpVC: UIViewController {
+class RegisterVC: UIViewController {
 // MARK: AS OUTLET
     let containerViewBackground = UIView ()
     let containerViewColor = UIView ()
@@ -82,7 +82,7 @@ class SignUpVC: UIViewController {
     }
 
 }
-extension SignUpVC {
+extension RegisterVC {
     func setupUI() {
         view.backgroundColor = .white
         
