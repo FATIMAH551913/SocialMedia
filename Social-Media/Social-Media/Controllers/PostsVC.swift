@@ -14,6 +14,7 @@ import NVActivityIndicatorView
 class PostsVC: UIViewController {
     
     var posts:[Post] = []
+   
     
     
     let cellID = "PostCell"
@@ -27,18 +28,46 @@ class PostsVC: UIViewController {
         return lbl
     }()
     
+    let logOutButton : UIButton = {
+        $0.setImage(UIImage(systemName: "lock.fill"), for: .normal)
+        $0.layer.cornerRadius = 7.5
+        $0.tintColor = .black
+        $0.addTarget(self, action: #selector(logOutTapped), for: .touchUpInside)
+        return $0
+    }(UIButton(type: .system))
+    
+    let WelcLabel : UILabel = {
+        let lbl = UILabel()
+        lbl.textAlignment = .center
+        lbl.font = UIFont.systemFont(ofSize: 16, weight: .thin)
+        lbl.textColor = .white
+        return lbl
+    }()
+    
+
+    
     let loaderView = UIActivityIndicatorView()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //check if user is logged in or it's only a guest
+        
+        if let user = UserManager.loggedInUser {
+            WelcLabel.text = "Hi,\(user.firstName)"
+        }else{
+            WelcLabel.isHidden = true
+        }
+        
         postTableView.delegate = self
         postTableView.dataSource = self
-        
+//        view.addSubview(WelcLabel)
         view.addSubview(postTableView)
         view.addSubview(headerview)
         view.addSubview(allPost)
         view.addSubview(loaderView)
+        view.addSubview(logOutButton)
+        headerview.addSubview(WelcLabel)
         
         //هذي الخاصية تخفي الفواصل بين السل.
         postTableView.separatorStyle = .none
@@ -49,6 +78,7 @@ class PostsVC: UIViewController {
         headerview.backgroundColor = .systemBrown
         loaderView.color = .blue
         loaderView.style = .medium
+//        WelcLabel.backgroundColor = .white
         
         
         postTableView.backgroundColor = .systemGray6
@@ -58,8 +88,14 @@ class PostsVC: UIViewController {
         postTableView.translatesAutoresizingMaskIntoConstraints = false
         allPost.translatesAutoresizingMaskIntoConstraints = false
         loaderView.translatesAutoresizingMaskIntoConstraints = false
-        
+        WelcLabel.translatesAutoresizingMaskIntoConstraints = false
+        logOutButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            
+            
+            logOutButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+            logOutButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15),
+            logOutButton.bottomAnchor.constraint(equalTo: postTableView.topAnchor, constant: -10),
             
             loaderView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 120),
             loaderView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 120),
@@ -78,7 +114,10 @@ class PostsVC: UIViewController {
             allPost.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             allPost.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
             
+            WelcLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            WelcLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
         ])
+        
         
         loaderView.startAnimating()
         PostAPI.getAllPost { postsResponse in
@@ -86,9 +125,17 @@ class PostsVC: UIViewController {
             self.postTableView.reloadData()
             self.loaderView.stopAnimating()
         }
-        
         view.backgroundColor = .white
-        
+    }
+    
+    @objc func logOutTapped(){
+        let vc = SignInVC()
+        let nav = UINavigationController()
+        nav.viewControllers = [vc]
+        nav.modalPresentationStyle = .fullScreen
+        nav.modalTransitionStyle = .crossDissolve
+        self.present(nav, animated: true, completion: nil)
+        UserManager.loggedInUser = nil
     }
     
 }
@@ -145,7 +192,7 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
         let vc = PostDetailsVC()
         
         vc.post = selectedPost
-        
+      
         navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -153,13 +200,11 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 400
     }
-    
 }
 
 extension PostsVC : PostCellDelegate {
     
-    
-    func userProfileTapped(cell:UITableViewCell) {
+        func userProfileTapped(cell:UITableViewCell) {
         print("I am here")
         if let inedxPath = postTableView.indexPath(for: cell){
             let post = posts[inedxPath.row]
@@ -169,45 +214,6 @@ extension PostsVC : PostCellDelegate {
             navigationController?.pushViewController(vc, animated: true)
 
         }
-     
     }
-    
-    
-    
-    
 }
 
-// شرح علي المطرفي للجيسن:
-// ١- اسوي سترنق من جيسن.
-//٢- اسوي دي كودنق.
-//٣- التايب كان عباره عن ستركت من نوع كودابل واستخدمنا اسم الستركت.
-
-
-
-//        let appId = "6202a19d8e6ae0624211e23b"
-//        let url = "https://dummyapi.io/data/v1/post"
-//
-//
-//        let headers: HTTPHeaders = [
-//            "app-id" : appId
-//        ]
-//
-//        loaderView.startAnimating()
-//
-//        AF.request(url, headers: headers).responseJSON { [self] response in
-//            loaderView.stopAnimating()
-//            //            print(response.value)
-//            //نستخدم منغير اسمه جيسنداتا من سويفتي جيسن
-//            let jsonData = JSON(response.value)
-//            let data = jsonData["data"]
-//            //Decoding :
-//            let decoder = JSONDecoder()
-//            do {
-//                self.posts = try decoder.decode([Post].self, from: data.rawData())
-//                self.postTableView.reloadData()
-//            }catch let error {
-//                // تعريف الايرور هنا يفيدني انه راح يحدد لي ايش نوع الخطآ بالتحديد اوضح من ايرور شكل سترنق .
-//                print(error)
-//            }
-//            print(data)
-//        }

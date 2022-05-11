@@ -18,9 +18,13 @@
 		FA3111AE27B2D25F002F1885 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA3111AD27B2D25F002F1885 /* Assets.xcassets */; };
 		FA3111B127B2D25F002F1885 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3111AF27B2D25F002F1885 /* LaunchScreen.storyboard */; };
 		FA3111B927B2D44E002F1885 /* PostsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3111B827B2D44E002F1885 /* PostsVC.swift */; };
+		FA3E6D37282B4A8E005F9366 /* TagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3E6D36282B4A8E005F9366 /* TagsVC.swift */; };
+		FA3E6D39282B57B4005F9366 /* TabBarCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3E6D38282B57B4005F9366 /* TabBarCustom.swift */; };
+		FA3E6D3B282B627F005F9366 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3E6D3A282B627F005F9366 /* TagCell.swift */; };
 		FA4E0D8827C111C3007F130B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4E0D8727C111C3007F130B /* Comment.swift */; };
 		FA4E0D8A27C11323007F130B /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4E0D8927C11323007F130B /* CommentCell.swift */; };
-		FA5A86C327FC77C600031DEB /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A86C227FC77C600031DEB /* LogInVC.swift */; };
+		FA5A86C327FC77C600031DEB /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A86C227FC77C600031DEB /* SignInVC.swift */; };
+		FA5F7FC22828D78A00F80705 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5F7FC12828D78A00F80705 /* UserManager.swift */; };
 		FA6F932827B4496E00A8571D /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F932727B4496E00A8571D /* Post.swift */; };
 		FA6F932D27B45F3500A8571D /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F932C27B45F3500A8571D /* PostCell.swift */; };
 		FA83F68427C2D63000901154 /* UIimage+StringUrlToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83F68327C2D63000901154 /* UIimage+StringUrlToImage.swift */; };
@@ -47,9 +51,13 @@
 		FA3111B027B2D25F002F1885 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA3111B227B2D25F002F1885 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA3111B827B2D44E002F1885 /* PostsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsVC.swift; sourceTree = "<group>"; };
+		FA3E6D36282B4A8E005F9366 /* TagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsVC.swift; sourceTree = "<group>"; };
+		FA3E6D38282B57B4005F9366 /* TabBarCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCustom.swift; sourceTree = "<group>"; };
+		FA3E6D3A282B627F005F9366 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		FA4E0D8727C111C3007F130B /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		FA4E0D8927C11323007F130B /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
-		FA5A86C227FC77C600031DEB /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
+		FA5A86C227FC77C600031DEB /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
+		FA5F7FC12828D78A00F80705 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		FA6F932727B4496E00A8571D /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FA6F932C27B45F3500A8571D /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		FA83F68327C2D63000901154 /* UIimage+StringUrlToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIimage+StringUrlToImage.swift"; sourceTree = "<group>"; };
@@ -139,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				FA6F932C27B45F3500A8571D /* PostCell.swift */,
+				FA3E6D3A282B627F005F9366 /* TagCell.swift */,
 				FA4E0D8927C11323007F130B /* CommentCell.swift */,
 				FAD961CF27C7573300DF5C88 /* ShadowView.swift */,
 			);
@@ -160,8 +169,10 @@
 			isa = PBXGroup;
 			children = (
 				FA3111B827B2D44E002F1885 /* PostsVC.swift */,
+				FA3E6D36282B4A8E005F9366 /* TagsVC.swift */,
+				FA3E6D38282B57B4005F9366 /* TabBarCustom.swift */,
 				FA8440FF27F8972A00524E6B /* RegisterVC.swift */,
-				FA5A86C227FC77C600031DEB /* LogInVC.swift */,
+				FA5A86C227FC77C600031DEB /* SignInVC.swift */,
 				FA93253B27CCA22F00C4A84E /* ProfileVC.swift */,
 				FA18BA2627BBD12800C4A266 /* PostDetailsVC.swift */,
 			);
@@ -172,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				FA83F68327C2D63000901154 /* UIimage+StringUrlToImage.swift */,
+				FA5F7FC12828D78A00F80705 /* UserManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -293,18 +305,22 @@
 			files = (
 				FA93253C27CCA22F00C4A84E /* ProfileVC.swift in Sources */,
 				FA6F932827B4496E00A8571D /* Post.swift in Sources */,
+				FA5F7FC22828D78A00F80705 /* UserManager.swift in Sources */,
 				FA3111B927B2D44E002F1885 /* PostsVC.swift in Sources */,
 				FA98AFC727B5BD3F00B08BC5 /* User.swift in Sources */,
 				FA4E0D8827C111C3007F130B /* Comment.swift in Sources */,
+				FA3E6D39282B57B4005F9366 /* TabBarCustom.swift in Sources */,
 				FA6F932D27B45F3500A8571D /* PostCell.swift in Sources */,
 				FA94F0CF27F5CFC40017D85A /* Location.swift in Sources */,
 				FA4E0D8A27C11323007F130B /* CommentCell.swift in Sources */,
-				FA5A86C327FC77C600031DEB /* LogInVC.swift in Sources */,
+				FA5A86C327FC77C600031DEB /* SignInVC.swift in Sources */,
 				FA2E886727F7E55500545B96 /* UserAPI.swift in Sources */,
+				FA3E6D37282B4A8E005F9366 /* TagsVC.swift in Sources */,
 				FA84410027F8972A00524E6B /* RegisterVC.swift in Sources */,
 				FA2E886527F7D69000545B96 /* PostAPI.swift in Sources */,
 				FA3111A527B2D25E002F1885 /* AppDelegate.swift in Sources */,
 				FA3111A727B2D25E002F1885 /* SceneDelegate.swift in Sources */,
+				FA3E6D3B282B627F005F9366 /* TagCell.swift in Sources */,
 				FA18BA2727BBD12800C4A266 /* PostDetailsVC.swift in Sources */,
 				FAD961D027C7573300DF5C88 /* ShadowView.swift in Sources */,
 				FA2E886927F7E76500545B96 /* API.swift in Sources */,

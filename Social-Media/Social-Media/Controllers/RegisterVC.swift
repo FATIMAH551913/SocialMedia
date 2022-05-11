@@ -42,7 +42,7 @@ class RegisterVC: UIViewController {
         $0.backgroundColor = .systemPurple
         $0.layer.cornerRadius = 22.5
         $0.tintColor = .white
-        $0.addTarget(self, action: #selector(signupAction), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(registerButtonClicked), for: .touchUpInside)
         return $0
     }(UIButton(type: .system))
     
@@ -65,7 +65,7 @@ class RegisterVC: UIViewController {
 
     }
     
-    @objc func signupAction() {
+    @objc func registerButtonClicked() {
         UserAPI.RegesterNewUser(firstName: nameTextField.text!, lastName: lastNameTextField.text!, email: emailTextField.text!)  { user, errorMessage in
             if errorMessage != nil {
                 let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)

@@ -12,9 +12,10 @@ import NVActivityIndicatorView
 
 class PostDetailsVC: UIViewController {
   
-    
     var post: Post!
     var comments:[Comment] = []
+  
+    
     
     let cellID = "CommentCell"
     let contentView = ShadowView()
@@ -29,7 +30,28 @@ class PostDetailsVC: UIViewController {
     let scrollView = UIScrollView()
     let contentViewScroll = UIView()
     let loding = UIActivityIndicatorView()
-   
+//    let newCommentSV : UIStackView = {
+//
+//    }(UIStackView())
+    
+    let sendbtn : UIButton = {
+        $0.setImage(UIImage(systemName: "arrowshape.turn.up.right.fill"), for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 10, weight: .bold)
+        $0.addTarget(self, action: #selector(sendButtomClicked), for: .touchUpInside)
+        return $0
+    }(UIButton())
+//    let textFieldComment = UITextField()
+    let textFieldComment : UITextField = {
+        $0.placeholder = "add ur Comments"
+        $0.textAlignment = .center
+//        $0.addTarget(self, action: #selector(sendButtomtext), for: .touchUpInside)
+
+       
+//        $0.backgroundColor = .init(white: 0.90, alpha: 1)
+        $0.backgroundColor = .red
+        $0.layer.cornerRadius = 3
+        return $0
+    }(UITextField())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +71,16 @@ class PostDetailsVC: UIViewController {
         
         setUpUI()
         // getting the comments of the post from the API
-
+           getPostComment()
+        if UserManager.loggedInUser == nil {
+            textFieldComment.isHidden = true
+            sendbtn.isHidden = true
+            
+        }
+    }
+    
+    
+    func getPostComment(){
         loding.startAnimating()
         PostAPI.getPostComment(id: post.id) { commentsResponse in
             self.comments = commentsResponse
@@ -58,28 +89,46 @@ class PostDetailsVC: UIViewController {
         }
     }
     
+   
+    @objc func sendButtomClicked(){
+        let message = textFieldComment.text!
+        if let user = UserManager.loggedInUser {
+            loding.startAnimating()
+            PostAPI.addNewCommentToPost(postId: post.id, userId: user.id  , message: message) {
+                self.getPostComment()
+                self.textFieldComment.text = ""
+            }
+        }
+    }
     
+
     func setUpUI(){
+        
+        textFieldComment.translatesAutoresizingMaskIntoConstraints = false
+        sendbtn.translatesAutoresizingMaskIntoConstraints = false
         loding.translatesAutoresizingMaskIntoConstraints = false
         contentViewScroll.translatesAutoresizingMaskIntoConstraints = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         containerViewTV.translatesAutoresizingMaskIntoConstraints = false
         commentsTableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentViewScroll)
         contentViewScroll.addSubview(contentView)
         contentViewScroll.addSubview(containerViewTV)
-//        contentViewScroll.addSubview(commentsTableView)
-        containerViewTV.addSubview(commentsTableView)
-        view.addSubview(scrollView)
+
         containerViewTV.addSubview(loding)
-        scrollView.addSubview(contentViewScroll)
+        containerViewTV.addSubview(sendbtn)
+        containerViewTV.addSubview(textFieldComment)
+        containerViewTV.addSubview(commentsTableView)
+        
         
         
         scrollView.backgroundColor = .white
         loding.color = .blue
-        containerViewTV.backgroundColor = .white
+        containerViewTV.backgroundColor = .green
         contentViewScroll.backgroundColor = .yellow
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .blue
         commentsTableView.backgroundColor = .white
         
         
@@ -105,22 +154,31 @@ class PostDetailsVC: UIViewController {
             contentView.bottomAnchor.constraint(equalTo: contentViewScroll.bottomAnchor,constant: -1000),
 //            contentView.heightAnchor.constraint(equalTo: contentViewScroll.heightAnchor, constant: 100),
             
+            containerViewTV.rightAnchor.constraint(equalTo: contentViewScroll.rightAnchor,constant: -8),
+            containerViewTV.leftAnchor.constraint(equalTo: contentViewScroll.leftAnchor,constant: 8),
+            containerViewTV.topAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 10 ),
+            containerViewTV.bottomAnchor.constraint(equalTo: contentViewScroll.bottomAnchor,constant: -10),
+            containerViewTV.heightAnchor.constraint(equalTo: commentsTableView.heightAnchor, constant: 100),
             
-            commentsTableView.rightAnchor.constraint(equalTo: contentViewScroll.rightAnchor,constant: -8),
-            commentsTableView.leftAnchor.constraint(equalTo: contentViewScroll.leftAnchor,constant: 8),
+            commentsTableView.rightAnchor.constraint(equalTo: containerViewTV.rightAnchor),
+            commentsTableView.leftAnchor.constraint(equalTo: containerViewTV.leftAnchor),
             commentsTableView.topAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 10 ),
-            commentsTableView.bottomAnchor.constraint(equalTo: contentViewScroll.bottomAnchor,constant: -10),
+            commentsTableView.bottomAnchor.constraint(equalTo: containerViewTV.bottomAnchor),
+            
             
             loding.rightAnchor.constraint(equalTo: commentsTableView.rightAnchor,constant: -40),
             loding.leftAnchor.constraint(equalTo: commentsTableView.leftAnchor, constant: 40),
             loding.bottomAnchor.constraint(equalTo: containerViewTV.bottomAnchor, constant: -70),
             loding.topAnchor.constraint(equalTo: commentsTableView.topAnchor, constant: 80),
        
-            containerViewTV.rightAnchor.constraint(equalTo: commentsTableView.rightAnchor,constant: -8),
-            containerViewTV.leftAnchor.constraint(equalTo: commentsTableView.leftAnchor,constant: 8),
-            containerViewTV.topAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 10 ),
-            containerViewTV.bottomAnchor.constraint(equalTo: commentsTableView.bottomAnchor,constant: -10),
-//            containerViewTV.heightAnchor.constraint(equalTo: commentsTableView.heightAnchor, constant: 200)
+            
+            sendbtn.topAnchor.constraint(equalTo: commentsTableView.bottomAnchor, constant: 35),
+            sendbtn.rightAnchor.constraint(equalTo: containerViewTV.rightAnchor, constant: -15),
+            
+            textFieldComment.topAnchor.constraint(equalTo: commentsTableView.bottomAnchor, constant: 20),
+            textFieldComment.leftAnchor.constraint(equalTo: containerViewTV.leftAnchor, constant: 20),
+            textFieldComment.rightAnchor.constraint(equalTo: containerViewTV.rightAnchor, constant: -40),
+            textFieldComment.bottomAnchor.constraint(equalTo: containerViewTV.bottomAnchor, constant: -25)
             
             
         ])
@@ -188,6 +246,8 @@ class PostDetailsVC: UIViewController {
     
 }
 
+
+
 extension PostDetailsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         comments.count
@@ -196,11 +256,19 @@ extension PostDetailsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! CommentCell
        let currentComment = comments[indexPath.row]
-        cell.lblComment.text = currentComment.message
+       
         cell.usernameComment.text = currentComment.owner.firstName + " " + currentComment.owner.lastName
-        let userImageStringurl = currentComment.owner.picture
-        cell.userImgComment.setImageFromStringUrl(stringUrl: userImageStringurl!)
+        cell.lblComment.text = currentComment.message
+        
+        if let userImage = currentComment.owner.picture{
+            cell.userImgComment.setImageFromStringUrl(stringUrl: userImage)
+        }
+//        cell.userImgComment.setImageFromStringUrl(stringUrl: currentComment.owner.picture!)
+        
 //        cell.userImgComment.makeCircularImage()
+//        let userImageStringurl = currentComment.owner.picture
+//        cell.userImgComment.setImageFromStringUrl(stringUrl: userImageStringurl!)
+
         
         
         return cell

@@ -47,5 +47,27 @@ class PostAPI:API {
         
     }
     
+    //MARK: COMMENT API
+    
+    static func addNewCommentToPost(postId:String, userId:String, message: String, complitionHandler: @escaping() -> ()){
+      
+        let url = "\(baseURL)/comment/create"
+        let params = [
+             "post" : postId,
+             "message" : message,
+             "owner" : userId
+        ]
+     
+        AF.request(url, method: .post , parameters: params, encoder: JSONParameterEncoder.default , headers: headers).validate().responseJSON { response in
+           
+            switch response.result{
+            case .success:
+                 complitionHandler()
+            case .failure(let error):
+               print(error)
+            }
+        }
+    }
+    
 }
 // static يعني ان الاستاتك لم يعد مرتبط بالاوبجكت من الكلاس بوست اي بي اي

@@ -22,7 +22,7 @@ class CommentCell: UITableViewCell {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 17
-//        $0.image = UIImage(systemName: "person.fill")
+        $0.image = UIImage(systemName: "person.fill")
         $0.contentMode = .scaleToFill
         return $0
     }(UIImageView())
