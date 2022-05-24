@@ -16,9 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ofS-Pa-Jdn">
-                                <rect key="frame" x="87" y="218" width="240" height="128"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2C-6I-0zw">
                                 <rect key="frame" x="140" y="128" width="132" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -37,7 +34,6 @@
                         <constraints>
                             <constraint firstItem="P2C-6I-0zw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="140" id="0E4-4K-sxI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="P2C-6I-0zw" secondAttribute="trailing" constant="142" id="0PN-U3-UPk"/>
-                            <constraint firstItem="ofS-Pa-Jdn" firstAttribute="top" secondItem="P2C-6I-0zw" secondAttribute="bottom" constant="70" id="6ZP-FQ-zBf"/>
                             <constraint firstItem="P2C-6I-0zw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="84" id="sLg-z2-9gP"/>
                         </constraints>
                     </view>

@@ -12,9 +12,15 @@ import SwiftyJSON
 class PostAPI:API {
     
    
-    static func getAllPost(complitionHandler: @escaping ([Post]) -> ()){
+    static func getAllPost(tag:String?, complitionHandler: @escaping ([Post]) -> ()){
+        
+       var url = baseURL + "/post"
+        
+        if var myTag = tag {
+            myTag = myTag.trimmingCharacters(in: .whitespaces)
+            url =  "\(baseURL)/tag/\(myTag)/post"
+        }
        
-        let url =  baseURL + "/post"
         AF.request(url, headers: headers).responseJSON {  response in
             let jsonData = JSON(response.value)
             let data = jsonData["data"]
@@ -29,6 +35,8 @@ class PostAPI:API {
             print(data)
         }
     }
+    
+    
     
     static func getPostComment(id: String , complitionHandler: @escaping ([Comment]) -> () ){
         let url = "\(baseURL)/post/\(id)/comment" // اسمها سكيب للستنرنق
@@ -46,6 +54,27 @@ class PostAPI:API {
         }
         
     }
+    
+    //MARK: TAG API
+    
+    static func getAllTags(complitionHandler: @escaping ([String]) -> ()){
+       
+        let url =  baseURL + "/tag"
+        AF.request(url, headers: headers).responseJSON {  response in
+            let jsonData = JSON(response.value)
+            let data = jsonData["data"]
+            //Decoding :
+            let decoder = JSONDecoder()
+            do {
+               let tags = try decoder.decode([String].self, from: data.rawData())
+              complitionHandler(tags)
+            }catch let error {
+                print(error)
+            }
+            print(data)
+        }
+    }
+
     
     //MARK: COMMENT API
     

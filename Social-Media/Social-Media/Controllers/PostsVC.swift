@@ -14,12 +14,13 @@ import NVActivityIndicatorView
 class PostsVC: UIViewController {
     
     var posts:[Post] = []
-   
+    var tag:String?
     
     
     let cellID = "PostCell"
     let postTableView = UITableView()
     let headerview = UIView()
+   
     let allPost : UILabel = {
         let lbl = UILabel()
         lbl.textAlignment = .left
@@ -44,6 +45,21 @@ class PostsVC: UIViewController {
         return lbl
     }()
     
+    
+    let NameTag : UILabel = {
+        let lbl = UILabel()
+        lbl.textAlignment = .center
+        lbl.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        lbl.textColor = .white
+//        lbl.backgroundColor = .white
+        lbl.layer.shadowRadius = 10
+        lbl.layer.shadowOpacity = 1.0
+        lbl.layer.shadowOffset = CGSize(width: 4, height: 4)
+        lbl.layer.shadowColor = UIColor.systemRed.cgColor
+        lbl.layer.cornerRadius = 30
+        return lbl
+    }()
+    
 
     
     let loaderView = UIActivityIndicatorView()
@@ -59,6 +75,14 @@ class PostsVC: UIViewController {
             WelcLabel.isHidden = true
         }
         
+        //check if there is a tag
+        if let myTag = tag {
+            NameTag.text = tag
+            WelcLabel.isHidden = true
+        }else {
+            NameTag.isHidden = true
+        }
+        
         postTableView.delegate = self
         postTableView.dataSource = self
 //        view.addSubview(WelcLabel)
@@ -68,6 +92,7 @@ class PostsVC: UIViewController {
         view.addSubview(loaderView)
         view.addSubview(logOutButton)
         headerview.addSubview(WelcLabel)
+        headerview.addSubview(NameTag)
         
         //هذي الخاصية تخفي الفواصل بين السل.
         postTableView.separatorStyle = .none
@@ -78,6 +103,7 @@ class PostsVC: UIViewController {
         headerview.backgroundColor = .systemBrown
         loaderView.color = .blue
         loaderView.style = .medium
+       
 //        WelcLabel.backgroundColor = .white
         
         
@@ -90,6 +116,7 @@ class PostsVC: UIViewController {
         loaderView.translatesAutoresizingMaskIntoConstraints = false
         WelcLabel.translatesAutoresizingMaskIntoConstraints = false
         logOutButton.translatesAutoresizingMaskIntoConstraints = false
+        NameTag.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             
             
@@ -115,12 +142,17 @@ class PostsVC: UIViewController {
             allPost.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
             
             WelcLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            WelcLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            WelcLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 130),
+            
+            NameTag.leftAnchor.constraint(equalTo: allPost.rightAnchor, constant: 10),
+            NameTag.bottomAnchor.constraint(equalTo: postTableView.topAnchor, constant: -10),
+            NameTag.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+//            NameTag.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 70)
         ])
         
         
         loaderView.startAnimating()
-        PostAPI.getAllPost { postsResponse in
+        PostAPI.getAllPost(tag: tag) { postsResponse in
             self.posts = postsResponse
             self.postTableView.reloadData()
             self.loaderView.stopAnimating()
