@@ -124,11 +124,11 @@ class PostDetailsVC: UIViewController {
         
         
         
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = .systemGray6
         loding.color = .blue
         containerViewTV.backgroundColor = .green
         contentViewScroll.backgroundColor = .yellow
-        contentView.backgroundColor = .blue
+        contentView.backgroundColor = .white
         commentsTableView.backgroundColor = .white
         
         
@@ -146,6 +146,7 @@ class PostDetailsVC: UIViewController {
             contentViewScroll.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             
         ])
+        
         
         NSLayoutConstraint.activate([
             contentView.rightAnchor.constraint(equalTo: contentViewScroll.rightAnchor,constant: -8),
@@ -165,13 +166,11 @@ class PostDetailsVC: UIViewController {
             commentsTableView.topAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 10 ),
             commentsTableView.bottomAnchor.constraint(equalTo: containerViewTV.bottomAnchor),
             
-            
             loding.rightAnchor.constraint(equalTo: commentsTableView.rightAnchor,constant: -40),
             loding.leftAnchor.constraint(equalTo: commentsTableView.leftAnchor, constant: 40),
             loding.bottomAnchor.constraint(equalTo: containerViewTV.bottomAnchor, constant: -70),
             loding.topAnchor.constraint(equalTo: commentsTableView.topAnchor, constant: 80),
        
-            
             sendbtn.topAnchor.constraint(equalTo: commentsTableView.bottomAnchor, constant: 35),
             sendbtn.rightAnchor.constraint(equalTo: containerViewTV.rightAnchor, constant: -15),
             

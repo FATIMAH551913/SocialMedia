@@ -17,7 +17,7 @@ class TagsVC: UIViewController {
     let headerview = UIView()
     let allTag : UILabel = {
         let lbl = UILabel()
-        lbl.textAlignment = .left
+        lbl.textAlignment = .center
         lbl.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         lbl.text = "Tags"
         return lbl
@@ -27,10 +27,10 @@ class TagsVC: UIViewController {
     var collectionViewTag: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.showsVerticalScrollIndicator = false
+        cv.showsHorizontalScrollIndicator = false
         cv.register(TagCell.self, forCellWithReuseIdentifier:"TagCell")
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = .white
+        cv.backgroundColor = .systemGray6
     
         return cv
     }()
@@ -75,9 +75,10 @@ class TagsVC: UIViewController {
             headerview.bottomAnchor.constraint(equalTo: collectionViewTag.topAnchor),
             
             collectionViewTag.topAnchor.constraint(equalTo:view.topAnchor, constant: 200),
-            collectionViewTag.leftAnchor.constraint(equalTo: view.leftAnchor),
-            collectionViewTag.rightAnchor.constraint(equalTo: view.rightAnchor),
+            collectionViewTag.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 5),
+            collectionViewTag.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -5),
             collectionViewTag.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionViewTag.widthAnchor.constraint(equalToConstant: view.bounds.size.width-20),
 
             allTag.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             allTag.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
@@ -85,18 +86,20 @@ class TagsVC: UIViewController {
             loaderView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 120),
             loaderView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 120),
             loaderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//                contentView.rightAnchor.constraint(equalTo: collectionViewTag.rightAnchor,constant: -8),
-//                contentView.leftAnchor.constraint(equalTo: collectionViewTag.leftAnchor,constant: 8),
-//                contentView.topAnchor.constraint(equalTo: collectionViewTag.topAnchor,constant: 10),
-//                contentView.bottomAnchor.constraint(equalTo: collectionViewTag.bottomAnchor,constant: -10)
+
             ])
             
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let screenWidth = view.bounds.size.width
+        return CGSize(width: screenWidth/2.1, height: 100)
+    }
 
 }
 
-extension TagsVC : UICollectionViewDelegate,UICollectionViewDataSource {
+extension TagsVC : UICollectionViewDelegate,UICollectionViewDataSource ,UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tags.count
@@ -116,6 +119,14 @@ extension TagsVC : UICollectionViewDelegate,UICollectionViewDataSource {
         
         navigationController?.pushViewController(vc, animated: true)
         
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+        
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
     }
 }
 

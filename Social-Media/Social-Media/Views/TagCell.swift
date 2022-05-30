@@ -13,6 +13,7 @@ class TagCell: UICollectionViewCell {
         $0.textColor =  UIColor.label
         $0.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 16, weight: .medium))
         $0.numberOfLines = 0
+     $0.textAlignment = .center
 //        $0.text = "Hello"
         return $0
     }(UILabel())
@@ -34,13 +35,13 @@ class TagCell: UICollectionViewCell {
     private func setupSizeForCellContent() {
         
 
-        tagNameLbl.frame = CGRect(x: 14, y: self.frame.size.height / 2.02, width: self.frame.size.width - 14, height: 30)
+        tagNameLbl.frame = CGRect(x: 14, y: self.frame.size.height / 4.02, width: self.frame.size.width - 20, height: 30)
 
         
     }
     
     private func setupCell() {
-        self.backgroundColor = UIColor(named: "BottomColor")
+        self.backgroundColor = .white
         self.addSubview(tagNameLbl)
         self.layer.cornerRadius = 13
         self.layer.masksToBounds = true

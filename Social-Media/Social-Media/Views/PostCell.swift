@@ -11,12 +11,14 @@ protocol PostCellDelegate {
     func userProfileTapped(cell:UITableViewCell)
 }
 
+
 class PostCell: UITableViewCell {
    
-    
+    var tags : [String] = []
     var delegate :PostCellDelegate? = nil
     
 
+    
     let contentbackView = ShadowView()
     let postTextLbl : UILabel = {
         let namelbl = UILabel()
@@ -27,6 +29,19 @@ class PostCell: UITableViewCell {
         namelbl.numberOfLines = 0
 //        namelbl.backgroundColor = .yellow
         return namelbl
+    }()
+    
+    let TagscollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
+        cv.register(PostTagCell.self, forCellWithReuseIdentifier:"PostTagCell")
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = .systemGray6
+       
+       
+        return cv
     }()
     
     let likesBtn : UIButton = {
@@ -117,6 +132,11 @@ class PostCell: UITableViewCell {
         userStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userStackViewTapped)))
     }
     
+    func didSet(){
+        TagscollectionView.delegate = self
+        TagscollectionView.dataSource = self
+    }
+    
     
     let postStackView : UIStackView = {
         let stack = UIStackView()
@@ -129,6 +149,8 @@ class PostCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+      
     }
     
 // MARK: ACTION
@@ -137,36 +159,28 @@ class PostCell: UITableViewCell {
         delegate?.userProfileTapped(cell: self)
     }
     
-
+   
+   
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         setUpView()
 
         self.backgroundColor = .white
         
+        
+    
+      
     }
     
-    
-//    func setUpBackView(){
-//        self.addSubview(backView)
-//        NSLayoutConstraint.activate([
-//
-//            backView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-//            backView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
-//            backView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
-//            backView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-//
-//        ])
-//
-//
-//    }
+
     func setUpView(){
     
 //        self.addSubview(postImage)
         self.addSubview(contentbackView)
-        self.addSubview(userImg)
-        self.addSubview(username)
+//        self.addSubview(userImg)
+//        self.addSubview(username)
         self.addSubview(likesBtn)
+        self.addSubview(TagscollectionView)
         self.addSubview(likesLbl)
         contentbackView.translatesAutoresizingMaskIntoConstraints = false
 //        self.addSubview(postTextLbl)
@@ -196,19 +210,26 @@ class PostCell: UITableViewCell {
             postStackView.topAnchor.constraint(equalTo: username.topAnchor, constant: 70),
             postStackView.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 20),
             postStackView.rightAnchor.constraint(equalTo: contentbackView.rightAnchor, constant: -20),
-            postStackView.bottomAnchor.constraint(equalTo: contentbackView.bottomAnchor, constant: -70),
+            postStackView.bottomAnchor.constraint(equalTo: contentbackView.bottomAnchor, constant: -150),
             
-            likesBtn.topAnchor.constraint(equalTo: postStackView.bottomAnchor, constant: 10),
+            TagscollectionView.topAnchor.constraint(equalTo: postStackView.bottomAnchor, constant: 5),
+            TagscollectionView.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 20),
+            TagscollectionView.rightAnchor.constraint(equalTo: contentbackView.rightAnchor, constant: -20),
+            TagscollectionView.heightAnchor.constraint(equalToConstant: 60),
+            TagscollectionView.bottomAnchor.constraint(equalTo: likesBtn.topAnchor, constant: -10),
+            
+            
+            likesBtn.topAnchor.constraint(equalTo: TagscollectionView.bottomAnchor, constant: 10),
             likesBtn.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 30),
             
-            likesLbl.topAnchor.constraint(equalTo: postStackView.bottomAnchor, constant: 10),
+            likesLbl.topAnchor.constraint(equalTo: TagscollectionView.bottomAnchor, constant: 10),
             likesLbl.leftAnchor.constraint(equalTo: likesBtn.rightAnchor, constant: 10),
 
             userStackView.topAnchor.constraint(equalTo: contentbackView.topAnchor, constant: 15),
             userStackView.leftAnchor.constraint(equalTo: contentbackView.leftAnchor, constant: 15),
 //            userStackView.widthAnchor.constraint(equalTo: contentbackView.widthAnchor, constant: 5),
             userStackView.rightAnchor.constraint(equalTo: contentbackView.rightAnchor, constant: -90),
-            userStackView.bottomAnchor.constraint(equalTo: contentbackView.bottomAnchor, constant: -330),
+            userStackView.bottomAnchor.constraint(equalTo: contentbackView.bottomAnchor, constant: -550),
 
             
 //            userImg.topAnchor.constraint(equalTo: contentbackView.topAnchor, constant: 15),
@@ -220,7 +241,7 @@ class PostCell: UITableViewCell {
 //            username.topAnchor.constraint(equalTo: contentbackView.topAnchor, constant: 30),
 //            username.leftAnchor.constraint(equalTo: userImg.rightAnchor, constant: 20),
 //            username.widthAnchor.constraint(equalTo: contentbackView.widthAnchor, constant: 10),
-            
+//
 
             
             
@@ -244,3 +265,34 @@ class PostCell: UITableViewCell {
 
 
 //searching about how to use aspect Ratio Programming to make image as cyrcal shap 
+extension PostCell : UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tags.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostTagCell", for: indexPath) as! PostTagCell
+        cell.tagNameLbl.text = tags[indexPath.row]
+    
+        return cell
+    }
+    
+ 
+}
+    
+
+    extension PostCell: UICollectionViewDelegateFlowLayout {
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let screenWidth = self.bounds.size.width
+            return CGSize(width: screenWidth/2.4, height: 35)
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+            return 1
+            
+        }
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+            return 5
+        }
+    
+    }

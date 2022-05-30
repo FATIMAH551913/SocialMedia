@@ -33,6 +33,7 @@
 		FA94F0CF27F5CFC40017D85A /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA94F0CE27F5CFC40017D85A /* Location.swift */; };
 		FA98AFC727B5BD3F00B08BC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98AFC627B5BD3F00B08BC5 /* User.swift */; };
 		FAD961D027C7573300DF5C88 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD961CF27C7573300DF5C88 /* ShadowView.swift */; };
+		FAEA97032841FCB50096A632 /* PostTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEA97022841FCB50096A632 /* PostTagCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		FA94F0CE27F5CFC40017D85A /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		FA98AFC627B5BD3F00B08BC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FAD961CF27C7573300DF5C88 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
+		FAEA97022841FCB50096A632 /* PostTagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTagCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				FA6F932C27B45F3500A8571D /* PostCell.swift */,
 				FA3E6D3A282B627F005F9366 /* TagCell.swift */,
 				FA4E0D8927C11323007F130B /* CommentCell.swift */,
+				FAEA97022841FCB50096A632 /* PostTagCell.swift */,
 				FAD961CF27C7573300DF5C88 /* ShadowView.swift */,
 			);
 			path = Views;
@@ -319,6 +322,7 @@
 				FA84410027F8972A00524E6B /* RegisterVC.swift in Sources */,
 				FA2E886527F7D69000545B96 /* PostAPI.swift in Sources */,
 				FA3111A527B2D25E002F1885 /* AppDelegate.swift in Sources */,
+				FAEA97032841FCB50096A632 /* PostTagCell.swift in Sources */,
 				FA3111A727B2D25E002F1885 /* SceneDelegate.swift in Sources */,
 				FA3E6D3B282B627F005F9366 /* TagCell.swift in Sources */,
 				FA18BA2727BBD12800C4A266 /* PostDetailsVC.swift in Sources */,

@@ -15,6 +15,8 @@ class PostsVC: UIViewController {
     
     var posts:[Post] = []
     var tag:String?
+    var page = 0
+    var total = 0
     
     
     let cellID = "PostCell"
@@ -45,7 +47,6 @@ class PostsVC: UIViewController {
         return lbl
     }()
     
-    
     let NameTag : UILabel = {
         let lbl = UILabel()
         lbl.textAlignment = .center
@@ -67,6 +68,9 @@ class PostsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getPosts()
+        
         //check if user is logged in or it's only a guest
         
         if let user = UserManager.loggedInUser {
@@ -96,6 +100,7 @@ class PostsVC: UIViewController {
         
         //هذي الخاصية تخفي الفواصل بين السل.
         postTableView.separatorStyle = .none
+        postTableView.showsVerticalScrollIndicator = false
         // تخفي الظل من الصورة عند الضغط .
         //        postTableView.allowsSelection = false
         
@@ -106,7 +111,7 @@ class PostsVC: UIViewController {
        
 //        WelcLabel.backgroundColor = .white
         
-        
+       
         postTableView.backgroundColor = .systemGray6
         postTableView.register(PostCell.self, forCellReuseIdentifier: cellID )
         
@@ -138,6 +143,8 @@ class PostsVC: UIViewController {
             postTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             postTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
+       
+            
             allPost.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             allPost.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
             
@@ -151,13 +158,20 @@ class PostsVC: UIViewController {
         ])
         
         
+    
+
+        view.backgroundColor = .white
+    }
+    
+    
+    func getPosts(){
         loaderView.startAnimating()
-        PostAPI.getAllPost(tag: tag) { postsResponse in
-            self.posts = postsResponse
+        PostAPI.getAllPost(page: page, tag: tag) { postsResponse,total  in
+            self.total = total
+            self.posts.append(contentsOf: postsResponse)
             self.postTableView.reloadData()
             self.loaderView.stopAnimating()
         }
-        view.backgroundColor = .white
     }
     
     @objc func logOutTapped(){
@@ -195,24 +209,16 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
         //        cell.userImg.makeCircularImage()
         cell.addAction()
         cell.delegate = self
+        cell.didSet()
         
         
-        
-        
-        //--------------------------------------------------------شرح
-        //        URL(string: <#T##String#>)
-        //ثم نحول URLالي Data
-        //        Date(contentsOf: )
-        // ثم نعتمد علي Data من خلال UIImage inisilizer as prameter
-        //        cell.PostImage.image = UIImage(data: <#T##Data#>)
-        //-------------------------------------------------------شرح
-        
+
         
         
         //filling the user Data:
         cell.username.text = post.owner.firstName + " " + post.owner.lastName
         cell.likesLbl.text = String(post.likes)
-        
+        cell.tags = post.tags ?? []
         return cell
     }
     
@@ -230,7 +236,14 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 400
+        return 640
+    }
+    //هذي الدالة تستدعي الاندكس باث وبالتالي تخبرني وين وصل المستخدم بالضبط لاي شريحة وكيف نعرف انه وصل لاخر شريحة؟ نقصنا ١ حتي يتحقق الشرط
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == posts.count - 1 && posts.count < total {
+            page = page + 1
+            getPosts()
+        }
     }
 }
 
@@ -249,3 +262,11 @@ extension PostsVC : PostCellDelegate {
     }
 }
 
+
+//--------------------------------------------------------شرح
+//        URL(string: <#T##String#>)
+//ثم نحول URLالي Data
+//        Date(contentsOf: )
+// ثم نعتمد علي Data من خلال UIImage inisilizer as prameter
+//        cell.PostImage.image = UIImage(data: <#T##Data#>)
+//-------------------------------------------------------شرح

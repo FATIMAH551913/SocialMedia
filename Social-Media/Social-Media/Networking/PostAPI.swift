@@ -12,23 +12,25 @@ import SwiftyJSON
 class PostAPI:API {
     
    
-    static func getAllPost(tag:String?, complitionHandler: @escaping ([Post]) -> ()){
+    static func getAllPost(page: Int ,tag:String?, complitionHandler: @escaping ([Post], Int) -> ()){
         
        var url = baseURL + "/post"
-        
         if var myTag = tag {
             myTag = myTag.trimmingCharacters(in: .whitespaces)
             url =  "\(baseURL)/tag/\(myTag)/post"
         }
-       
-        AF.request(url, headers: headers).responseJSON {  response in
+        let params = [
+            "page": "\(page)" , "limit" : "5"
+        ]
+        AF.request(url, parameters:params , encoder: URLEncodedFormParameterEncoder.default, headers: headers).responseJSON {  response in
             let jsonData = JSON(response.value)
             let data = jsonData["data"]
+            let total = jsonData["total"].intValue
             //Decoding :
             let decoder = JSONDecoder()
             do {
                let posts = try decoder.decode([Post].self, from: data.rawData())
-              complitionHandler(posts)
+              complitionHandler(posts , total)
             }catch let error {
                 print(error)
             }
