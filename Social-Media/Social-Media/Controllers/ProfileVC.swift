@@ -155,14 +155,15 @@ class ProfileVC: UIViewController {
     func setUpUI(){
         
         profileUsername.text = user.firstName + " " + user.lastName
-        profileImageView.setImageFromStringUrl(stringUrl: user.picture!)
+        if let image = user.picture {
+            profileImageView.setImageFromStringUrl(stringUrl: image)
+        }
         profileEmail.text = user.email
         profileNumber.text = user.phone
         profileGender.text = user.gender
         if let location = user.location{
             profileCountry.text = location.country! + " _ " + location.city!
         }
-         
       
     }
 }

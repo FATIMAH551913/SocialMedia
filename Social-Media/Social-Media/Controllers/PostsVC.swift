@@ -68,15 +68,18 @@ class PostsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+           getPosts()
         
-        getPosts()
+        NotificationCenter.default.addObserver(self, selector: #selector(newPostAdded), name: NSNotification.Name("NewPostAdded"), object: nil)
+        
+        
         
         //check if user is logged in or it's only a guest
-        
         if let user = UserManager.loggedInUser {
             WelcLabel.text = "Hi,\(user.firstName)"
         }else{
             WelcLabel.isHidden = true
+        
         }
         
         //check if there is a tag
@@ -89,7 +92,7 @@ class PostsVC: UIViewController {
         
         postTableView.delegate = self
         postTableView.dataSource = self
-//        view.addSubview(WelcLabel)
+     
         view.addSubview(postTableView)
         view.addSubview(headerview)
         view.addSubview(allPost)
@@ -109,12 +112,12 @@ class PostsVC: UIViewController {
         loaderView.color = .blue
         loaderView.style = .medium
        
+       
 //        WelcLabel.backgroundColor = .white
         
        
         postTableView.backgroundColor = .systemGray6
         postTableView.register(PostCell.self, forCellReuseIdentifier: cellID )
-        
         headerview.translatesAutoresizingMaskIntoConstraints = false
         postTableView.translatesAutoresizingMaskIntoConstraints = false
         allPost.translatesAutoresizingMaskIntoConstraints = false
@@ -137,6 +140,9 @@ class PostsVC: UIViewController {
             headerview.leftAnchor.constraint(equalTo: view.leftAnchor),
             headerview.rightAnchor.constraint(equalTo: view.rightAnchor),
             headerview.bottomAnchor.constraint(equalTo: postTableView.topAnchor),
+            
+
+            
             
             postTableView.topAnchor.constraint(equalTo:view.topAnchor, constant: 200),
             postTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -174,6 +180,13 @@ class PostsVC: UIViewController {
         }
     }
     
+    
+    @objc func newPostAdded(){
+        self.posts = []
+        self.page = 0
+        getPosts()
+    }
+    
     @objc func logOutTapped(){
         let vc = SignInVC()
         let nav = UINavigationController()
@@ -183,6 +196,7 @@ class PostsVC: UIViewController {
         self.present(nav, animated: true, completion: nil)
         UserManager.loggedInUser = nil
     }
+    
     
 }
 
@@ -205,7 +219,10 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
         cell.postImage.setImageFromStringUrl(stringUrl: imageStringUrl)
         //the logic of filling the user's image frim the url:
         let userImageStringurl = post.owner.picture
-        cell.userImg.setImageFromStringUrl(stringUrl: userImageStringurl!)
+        if let image = userImageStringurl{
+            cell.userImg.setImageFromStringUrl(stringUrl: image)
+        }
+       
         //        cell.userImg.makeCircularImage()
         cell.addAction()
         cell.delegate = self

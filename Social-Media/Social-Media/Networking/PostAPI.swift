@@ -38,7 +38,24 @@ class PostAPI:API {
         }
     }
     
-    
+    static func addNewPost(text:String, userId:String, complitionHandler: @escaping() -> ()){
+      
+        let url = "\(baseURL)/post/create"
+        let params = [
+             "text" : text,
+             "owner" : userId
+        ]
+     
+        AF.request(url, method: .post , parameters: params, encoder: JSONParameterEncoder.default , headers: headers).validate().responseJSON { response in
+           
+            switch response.result{
+            case .success:
+                 complitionHandler()
+            case .failure(let error):
+               print(error)
+            }
+        }
+    }
     
     static func getPostComment(id: String , complitionHandler: @escaping ([Comment]) -> () ){
         let url = "\(baseURL)/post/\(id)/comment" // اسمها سكيب للستنرنق
@@ -99,6 +116,6 @@ class PostAPI:API {
             }
         }
     }
-    
 }
+
 // static يعني ان الاستاتك لم يعد مرتبط بالاوبجكت من الكلاس بوست اي بي اي

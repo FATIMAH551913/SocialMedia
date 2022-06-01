@@ -13,9 +13,14 @@ class TabBarCustom: UITabBarController {
         super.viewDidLoad()
         
         viewControllers = [
+            
+            barItem(tabBarTitle: "Profile", tabBarImage: UIImage(systemName: "person.fill")!.withTintColor(UIColor(named: "TextColor")!, renderingMode: .alwaysOriginal), viewController: PrfilePersonalVC()),
+            
             barItem(tabBarTitle: "Tags", tabBarImage: UIImage(systemName: "tag")!.withTintColor(UIColor(named: "TextColor")!, renderingMode: .alwaysOriginal), viewController: TagsVC()),
             
             barItem(tabBarTitle: "Posts", tabBarImage: UIImage(systemName: "homekit")!.withTintColor(UIColor(named: "TextColor")!, renderingMode: .alwaysOriginal), viewController: PostsVC()),
+        
+            barItem(tabBarTitle: "Add", tabBarImage: UIImage(systemName: "cross.circle.fill")!.withTintColor(UIColor(named: "TextColor")!, renderingMode: .alwaysOriginal), viewController: NewPostVC()),
         ]
         
         tabBar.backgroundColor = .systemBrown

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5E0DE0D1BA110682C1940F1A /* Pods_Social_Media.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D974FC9F18D096FEDA509D09 /* Pods_Social_Media.framework */; };
 		FA18BA2727BBD12800C4A266 /* PostDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA18BA2627BBD12800C4A266 /* PostDetailsVC.swift */; };
+		FA2C3658284782840044C737 /* PrfilePersonalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C3657284782840044C737 /* PrfilePersonalVC.swift */; };
 		FA2E886527F7D69000545B96 /* PostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2E886427F7D69000545B96 /* PostAPI.swift */; };
 		FA2E886727F7E55500545B96 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2E886627F7E55500545B96 /* UserAPI.swift */; };
 		FA2E886927F7E76500545B96 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2E886827F7E76500545B96 /* API.swift */; };
@@ -29,6 +30,7 @@
 		FA6F932D27B45F3500A8571D /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F932C27B45F3500A8571D /* PostCell.swift */; };
 		FA83F68427C2D63000901154 /* UIimage+StringUrlToImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83F68327C2D63000901154 /* UIimage+StringUrlToImage.swift */; };
 		FA84410027F8972A00524E6B /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8440FF27F8972A00524E6B /* RegisterVC.swift */; };
+		FA87EBFB2845CFAC00DCAAFF /* NewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA87EBFA2845CFAC00DCAAFF /* NewPostVC.swift */; };
 		FA93253C27CCA22F00C4A84E /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93253B27CCA22F00C4A84E /* ProfileVC.swift */; };
 		FA94F0CF27F5CFC40017D85A /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA94F0CE27F5CFC40017D85A /* Location.swift */; };
 		FA98AFC727B5BD3F00B08BC5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98AFC627B5BD3F00B08BC5 /* User.swift */; };
@@ -41,6 +43,7 @@
 		907D1D02912808C6272D8205 /* Pods-Social-Media.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Social-Media.release.xcconfig"; path = "Target Support Files/Pods-Social-Media/Pods-Social-Media.release.xcconfig"; sourceTree = "<group>"; };
 		D974FC9F18D096FEDA509D09 /* Pods_Social_Media.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Social_Media.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA18BA2627BBD12800C4A266 /* PostDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailsVC.swift; sourceTree = "<group>"; };
+		FA2C3657284782840044C737 /* PrfilePersonalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrfilePersonalVC.swift; sourceTree = "<group>"; };
 		FA2E886427F7D69000545B96 /* PostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAPI.swift; sourceTree = "<group>"; };
 		FA2E886627F7E55500545B96 /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		FA2E886827F7E76500545B96 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 		FA6F932C27B45F3500A8571D /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		FA83F68327C2D63000901154 /* UIimage+StringUrlToImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIimage+StringUrlToImage.swift"; sourceTree = "<group>"; };
 		FA8440FF27F8972A00524E6B /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
+		FA87EBFA2845CFAC00DCAAFF /* NewPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostVC.swift; sourceTree = "<group>"; };
 		FA93253B27CCA22F00C4A84E /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		FA94F0CE27F5CFC40017D85A /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		FA98AFC627B5BD3F00B08BC5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -172,10 +176,12 @@
 			isa = PBXGroup;
 			children = (
 				FA3111B827B2D44E002F1885 /* PostsVC.swift */,
+				FA2C3657284782840044C737 /* PrfilePersonalVC.swift */,
 				FA3E6D36282B4A8E005F9366 /* TagsVC.swift */,
 				FA3E6D38282B57B4005F9366 /* TabBarCustom.swift */,
 				FA8440FF27F8972A00524E6B /* RegisterVC.swift */,
 				FA5A86C227FC77C600031DEB /* SignInVC.swift */,
+				FA87EBFA2845CFAC00DCAAFF /* NewPostVC.swift */,
 				FA93253B27CCA22F00C4A84E /* ProfileVC.swift */,
 				FA18BA2627BBD12800C4A266 /* PostDetailsVC.swift */,
 			);
@@ -325,7 +331,9 @@
 				FAEA97032841FCB50096A632 /* PostTagCell.swift in Sources */,
 				FA3111A727B2D25E002F1885 /* SceneDelegate.swift in Sources */,
 				FA3E6D3B282B627F005F9366 /* TagCell.swift in Sources */,
+				FA87EBFB2845CFAC00DCAAFF /* NewPostVC.swift in Sources */,
 				FA18BA2727BBD12800C4A266 /* PostDetailsVC.swift in Sources */,
+				FA2C3658284782840044C737 /* PrfilePersonalVC.swift in Sources */,
 				FAD961D027C7573300DF5C88 /* ShadowView.swift in Sources */,
 				FA2E886927F7E76500545B96 /* API.swift in Sources */,
 				FA83F68427C2D63000901154 /* UIimage+StringUrlToImage.swift in Sources */,
@@ -478,6 +486,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3AW2YNGT24;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Social-Media/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -505,6 +514,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3AW2YNGT24;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Social-Media/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
