@@ -21,7 +21,6 @@ class UserAPI:API {
             do {
                let user = try decoder.decode(User.self, from: jsonData.rawData())
              complitionHandler(user)
-                
             }catch let error {
                 print(error)
             }
@@ -123,6 +122,46 @@ class UserAPI:API {
         }
     }
     
-   
+    static func updateUserInfo(userId: String,firstName: String, phone:String, imageUrl: String ,complitionHandler: @escaping(User?, String?) -> ()){
+      
+        let url = "\(baseURL)/user/\(userId)"
+        let params = [
+            "firstName" : firstName,
+            "phone" : phone ,
+            "picture" : imageUrl
+        ]
+     
+        AF.request(url, method: .put , parameters: params, encoder: JSONParameterEncoder.default , headers: headers).validate().responseJSON { response in
+           
+            switch response.result{
+                
+            case .success:
+                let jsonData = JSON(response.value)
+                print(jsonData)
+                let decoder = JSONDecoder()
+                do {
+                   let user = try decoder.decode(User.self, from: jsonData.rawData())
+                 
+                   
+                 complitionHandler(user, nil)
+                    
+                    
+                }catch let error {
+                    print(error)
+                   
+                }
+            case .failure(let error):
+                let jsonData = JSON(response.data)
+                let data = jsonData["data"]
+               
+                let firstNameError = data["firstName"].stringValue
+                let lastNameError = data["lastName"].stringValue
+                let messageErorr = firstNameError + " " + lastNameError
+                complitionHandler(nil, messageErorr)
+               
+            }
+            
+        }
+    }
 }
 
