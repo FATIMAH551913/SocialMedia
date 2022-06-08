@@ -6,37 +6,50 @@
 //
 
 import UIKit
+import Spring
 
 class RegisterVC: UIViewController {
 // MARK: AS OUTLET
     let containerViewBackground = UIView ()
     let containerViewColor = UIView ()
-    let nameTextField : UITextField = {
+ 
+
+
+    let nameTextField : SpringTextField = {
         $0.placeholder = "First Name"
+        $0.delay = 1
+        $0.animation = "fadeInLeft"
+        $0.duration = 0.5
         $0.textAlignment = .center
         $0.backgroundColor = .init(white: 0.90, alpha: 1)
         $0.layer.cornerRadius = 22.5
         return $0
-    }(UITextField())
+    }(SpringTextField())
     
-    let lastNameTextField : UITextField = {
+    let lastNameTextField : SpringTextField = {
         $0.placeholder = "Last Name"
+        $0.delay = 1
+        $0.animation = "fadeInLeft"
+        $0.duration = 0.9
         $0.textAlignment = .center
         $0.backgroundColor = .init(white: 0.90, alpha: 1)
         $0.layer.cornerRadius = 22.5
         return $0
-    }(UITextField())
+    }(SpringTextField ())
     
-    let emailTextField : UITextField = {
+    let emailTextField : SpringTextField = {
         $0.placeholder = "E-mail"
+        $0.delay = 1
+        $0.animation = "fadeInLeft"
+        $0.duration = 1
         $0.isSecureTextEntry = true
         $0.textAlignment = .center
         $0.backgroundColor = .init(white: 0.90, alpha: 1)
         $0.layer.cornerRadius = 22.5
         return $0
-    }(UITextField())
+    }(SpringTextField())
     
-    let signUpButton : UIButton = {
+    let signUpButton : SpringButton = {
         $0.setTitle("Register", for: .normal)
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
         $0.backgroundColor = .systemPurple
@@ -44,8 +57,7 @@ class RegisterVC: UIViewController {
         $0.tintColor = .white
         $0.addTarget(self, action: #selector(registerButtonClicked), for: .touchUpInside)
         return $0
-    }(UIButton(type: .system))
-    
+    }(SpringButton(type: .system))
    
     let stackView : UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -61,8 +73,17 @@ class RegisterVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
            setupUI()
+           animatIn()
+       
+    }
+    
+    func animatIn(){
         
-
+        nameTextField.animate()
+        lastNameTextField.animate()
+        emailTextField.animate()
+        signUpButton.animate()
+    
     }
     
     @objc func registerButtonClicked() {
@@ -87,7 +108,6 @@ extension RegisterVC {
         view.backgroundColor = .white
         
         view.addSubview(stackView)
-//        view.addSubview(containerViewBackground)
         stackView.addArrangedSubview(nameTextField)
         stackView.addArrangedSubview(lastNameTextField)
         stackView.addArrangedSubview(emailTextField)
@@ -102,36 +122,6 @@ extension RegisterVC {
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             stackView.heightAnchor.constraint(equalToConstant: 210),
             
-         
-//
-//
-//
-//                containerViewBackground.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//                containerViewBackground.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-//                containerViewBackground.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-//                containerViewBackground.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-//                containerViewBackground.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200),
-            
         ])
     }
 }
-
-//        view.addSubview(containerViewBackground)
-//        containerViewBackground.backgroundColor = .brown
-//        containerViewBackground.addSubview(containerViewColor)
-//        containerViewColor.backgroundColor = .red
-
-//        containerViewBackground.translatesAutoresizingMaskIntoConstraints = false
-//
-//        NSLayoutConstraint.activate([
-//
-//            containerViewBackground.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            containerViewBackground.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-//            containerViewBackground.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-//            containerViewBackground.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-//            containerViewBackground.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200),
-
-//            containerViewColor.bottomAnchor.constraint(equalTo: containerViewBackground.topAnchor,constant: 30),
-//            containerViewColor.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-//            containerViewColor.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 20),
-//            containerViewColor.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 15)

@@ -11,9 +11,17 @@ import NVActivityIndicatorView
 
 class NewPostVC: UIViewController {
    
-    let containerViewBackground = UIView ()
+    let containerViewBackground = ShadowView()
     let containerViewColor = UIView ()
     let loaderView = UIActivityIndicatorView()
+    let supjectLbl: UILabel = {
+        let name = UILabel()
+        name.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        name.textColor = .black
+        name.textAlignment = .center
+        name.text = "Add New Post"
+        return name
+    }()
     let postTextField : UITextField = {
         $0.placeholder = "Post Text"
         $0.textAlignment = .center
@@ -54,22 +62,49 @@ class NewPostVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
            setUp()
-        loaderView.color = .blue
-        loaderView.style = .large
-        loaderView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
     }
     @objc func addPostButtonClicked(){
         if let user = UserManager.loggedInUser {
+            if postTextField.text!.isEmpty {
+                
+                let alert = UIAlertController(title: "Oops!",
+                                              message: "There is no post 😊 ",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: .cancel,
+                                              handler: nil))
+                self.present(alert, animated: true)
+            }else{
+                
             addPost.setTitle(" ", for: .normal)
             loaderView.startAnimating()
+                
             PostAPI.addNewPost(text: postTextField.text!, userId: user.id) {
                 self.loaderView.stopAnimating()
                 self.addPost.setTitle("Add", for: .normal)
                 NotificationCenter.default.post(name: NSNotification.Name("NewPostAdded"), object: nil, userInfo: nil)
-                self.postTextField.text = ""
-                   
+               
+                let alertController = UIAlertController(
+                    title: "Saved Successfully",
+                   message:" Thanks For You👍🏼",
+                preferredStyle:UIAlertController.Style.actionSheet)
+                // ok , cancel
+                alertController.addAction(UIAlertAction(
+                    title: "Done",
+                    style: UIAlertAction.Style.default,
+                    handler: { Action in
+
+                  self.postTextField.text = ""
+                        
+                    }
+                ))
+                //present
+                self.present( alertController, animated: true) {
+                    
+                  }
+                
+               }
+
             }
         }
     }
@@ -78,16 +113,22 @@ class NewPostVC: UIViewController {
 extension NewPostVC {
     func setUp() {
        
-      
         view.addSubview(stackView)
-//        view.addSubview(containerViewBackground)
+        view.addSubview(containerViewBackground)
+        containerViewBackground.addSubview(supjectLbl)
         stackView.addArrangedSubview(postTextField)
         stackView.addArrangedSubview(postimageTextField)
         stackView.addArrangedSubview(addPost)
         view.addSubview(loaderView)
-      
+        
+        loaderView.color = .blue
+        loaderView.style = .large
+        containerViewBackground.backgroundColor = .systemPurple
+        
+        loaderView.translatesAutoresizingMaskIntoConstraints = false
         containerViewBackground.translatesAutoresizingMaskIntoConstraints = false
         containerViewColor.translatesAutoresizingMaskIntoConstraints = false
+        supjectLbl.translatesAutoresizingMaskIntoConstraints = false
      
         NSLayoutConstraint.activate([
             
@@ -100,7 +141,17 @@ extension NewPostVC {
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             stackView.heightAnchor.constraint(equalToConstant: 210),
-         
+            
+            containerViewBackground.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            containerViewBackground.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            containerViewBackground.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+            containerViewBackground.heightAnchor.constraint(equalToConstant: 70),
+            
+            supjectLbl.topAnchor.constraint(equalTo: containerViewBackground.topAnchor),
+            supjectLbl.leftAnchor.constraint(equalTo: containerViewBackground.leftAnchor),
+            supjectLbl.rightAnchor.constraint(equalTo: containerViewBackground.rightAnchor),
+            supjectLbl.bottomAnchor.constraint(equalTo: containerViewBackground.bottomAnchor)
+
             ])
             
             }

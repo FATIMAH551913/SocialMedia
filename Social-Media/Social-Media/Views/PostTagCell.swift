@@ -9,16 +9,12 @@ import UIKit
 
 class PostTagCell: UICollectionViewCell {
     
-    
-    
-//    let backView = ShadowView()
     let tagNameLbl: UILabel = {
-           $0.textColor =  UIColor.label
-           $0.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 12, weight: .medium))
-           $0.numberOfLines = 0
+        $0.textColor =  UIColor.label
+        $0.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 12, weight: .medium))
+        $0.numberOfLines = 0
         $0.textAlignment = .center
-//           $0.text = "Hello"
-           return $0
+    return $0
        }(UILabel())
        
        
@@ -27,7 +23,6 @@ class PostTagCell: UICollectionViewCell {
            setupCell()
            
        }
-       
        
        required init?(coder: NSCoder){fatalError("init(coder:) has not been implemented")}
        override func layoutSubviews() {
@@ -41,12 +36,10 @@ class PostTagCell: UICollectionViewCell {
        }
        
        private func setupCell() {
-           self.backgroundColor = .white
+           self.backgroundColor = .systemPurple
            self.addSubview(tagNameLbl)
            self.layer.cornerRadius = 13
            self.layer.masksToBounds = true
 
        }
-       
-       
    }

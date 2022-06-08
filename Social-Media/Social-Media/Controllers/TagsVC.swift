@@ -12,7 +12,7 @@ class TagsVC: UIViewController {
     
     var tags:[String] = []
     
-//    let contentView = UIView()
+    let contentView = ShadowView()
     let loaderView = UIActivityIndicatorView()
     let headerview = UIView()
     let allTag : UILabel = {
@@ -23,7 +23,6 @@ class TagsVC: UIViewController {
         return lbl
     }()
     
-    
     var collectionViewTag: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -31,7 +30,6 @@ class TagsVC: UIViewController {
         cv.register(TagCell.self, forCellWithReuseIdentifier:"TagCell")
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.backgroundColor = .systemGray6
-    
         return cv
     }()
 
@@ -39,6 +37,7 @@ class TagsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+            setUpUI()
         
         collectionViewTag.delegate = self
         collectionViewTag.dataSource = self
@@ -51,43 +50,7 @@ class TagsVC: UIViewController {
         }
     
         
-        view.addSubview(collectionViewTag)
-        view.addSubview(headerview)
-        view.addSubview(allTag)
-        view.addSubview(loaderView)
-
-//        contentView.addSubview(collectionViewTag)
         
-        headerview.backgroundColor = .systemBrown
-        loaderView.color = .blue
-//        contentView.backgroundColor = .yellow
-        
-        headerview.translatesAutoresizingMaskIntoConstraints = false
-        allTag.translatesAutoresizingMaskIntoConstraints = false
-        loaderView.translatesAutoresizingMaskIntoConstraints = false
-//        contentView.translatesAutoresizingMaskIntoConstraints = false
-
-        
-        NSLayoutConstraint.activate([
-            headerview.topAnchor.constraint(equalTo: view.topAnchor),
-            headerview.leftAnchor.constraint(equalTo: view.leftAnchor),
-            headerview.rightAnchor.constraint(equalTo: view.rightAnchor),
-            headerview.bottomAnchor.constraint(equalTo: collectionViewTag.topAnchor),
-            
-            collectionViewTag.topAnchor.constraint(equalTo:view.topAnchor, constant: 200),
-            collectionViewTag.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 5),
-            collectionViewTag.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -5),
-            collectionViewTag.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionViewTag.widthAnchor.constraint(equalToConstant: view.bounds.size.width-20),
-
-            allTag.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            allTag.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-            
-            loaderView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 120),
-            loaderView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 120),
-            loaderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            ])
             
     }
     
@@ -128,5 +91,44 @@ extension TagsVC : UICollectionViewDelegate,UICollectionViewDataSource ,UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 5
     }
+}
+
+extension TagsVC {
+    func setUpUI(){
+        view.addSubview(collectionViewTag)
+        view.addSubview(headerview)
+        view.addSubview(allTag)
+        view.addSubview(loaderView)
+        
+        headerview.backgroundColor = .systemPurple
+        loaderView.color = .blue
+
+        headerview.translatesAutoresizingMaskIntoConstraints = false
+        allTag.translatesAutoresizingMaskIntoConstraints = false
+        loaderView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            headerview.topAnchor.constraint(equalTo: view.topAnchor),
+            headerview.leftAnchor.constraint(equalTo: view.leftAnchor),
+            headerview.rightAnchor.constraint(equalTo: view.rightAnchor),
+            headerview.bottomAnchor.constraint(equalTo: collectionViewTag.topAnchor),
+            
+            collectionViewTag.topAnchor.constraint(equalTo:view.topAnchor, constant: 200),
+            collectionViewTag.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 5),
+            collectionViewTag.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -5),
+            collectionViewTag.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionViewTag.widthAnchor.constraint(equalToConstant: view.bounds.size.width-20),
+
+            allTag.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            allTag.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+            
+            loaderView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 120),
+            loaderView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 120),
+            loaderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            ])
+        
+    }
+    
 }
 

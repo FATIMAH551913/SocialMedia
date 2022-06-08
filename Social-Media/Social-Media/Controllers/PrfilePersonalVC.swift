@@ -109,6 +109,44 @@ class PrfilePersonalVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUi()
+        setUpConstraint()
+        
+    }
+    
+    func setUpUi(){
+        if let user = UserManager.loggedInUser {
+            if let image = user.picture {
+                userImageView.setImageFromStringUrl(stringUrl: image)
+            }
+            
+            username.text = user.firstName + " " + user.lastName
+            firstNameTF.text = user.firstName
+            phoneNumTF.text = user.phone
+            imageUrlTF.text = user.picture
+        }
+    }
+    
+    @objc func supmitClicked(){
+        guard let logedInuser = UserManager.loggedInUser else {return}
+        loaderView.startAnimating()
+        UserAPI.updateUserInfo(
+                        userId: logedInuser.id,
+                        firstName:firstNameTF.text!,
+                        phone:phoneNumTF.text! ,
+                        imageUrl: imageUrlTF.text!)
+        { user, message in
+            self.loaderView.stopAnimating()
+            if let respounseUser = user {
+                if let image = user?.picture {
+                self.userImageView.setImageFromStringUrl(stringUrl: image)
+                }
+                self.username.text = respounseUser.firstName + " " + respounseUser.lastName
+                
+            }
+        }
+    }
+    
+    func setUpConstraint(){
         
         loaderView.color = .blue
         loaderView.style = .large
@@ -182,39 +220,6 @@ class PrfilePersonalVC: UIViewController {
             loaderView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
-    }
-    
-    func setUpUi(){
-        if let user = UserManager.loggedInUser {
-            if let image = user.picture {
-                userImageView.setImageFromStringUrl(stringUrl: image)
-            }
-            
-            username.text = user.firstName + " " + user.lastName
-            firstNameTF.text = user.firstName
-            phoneNumTF.text = user.phone
-            imageUrlTF.text = user.picture
-        }
-    }
-    @objc func supmitClicked(){
-        guard let logedInuser = UserManager.loggedInUser else {return}
-        loaderView.startAnimating()
-        UserAPI.updateUserInfo(
-                        userId: logedInuser.id,
-                        firstName:firstNameTF.text!,
-                        phone:phoneNumTF.text! ,
-                        imageUrl: imageUrlTF.text!)
-        { user, message in
-            self.loaderView.stopAnimating()
-            if let respounseUser = user {
-                if let image = user?.picture {
-                self.userImageView.setImageFromStringUrl(stringUrl: image)
-                }
-                self.username.text = respounseUser.firstName + " " + respounseUser.lastName
-                
-                
-            }
-        }
     }
 }
 

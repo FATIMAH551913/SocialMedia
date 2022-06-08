@@ -23,10 +23,8 @@ extension UIImageView {
     
     func makeCircularImage(){
         
-                self.layer.cornerRadius = self.frame.width/2
-        
+        self.layer.cornerRadius = self.frame.width/2
     }
-    
 }
 
 //extension  UILabel {

@@ -45,10 +45,6 @@ class TagCell: UICollectionViewCell {
         self.addSubview(tagNameLbl)
         self.layer.cornerRadius = 13
         self.layer.masksToBounds = true
-
-        
-        
     }
-    
     
 }

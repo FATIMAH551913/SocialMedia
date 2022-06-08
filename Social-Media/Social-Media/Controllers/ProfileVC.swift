@@ -13,9 +13,8 @@ class ProfileVC: UIViewController {
     
     var user: User!
     
+    
     let containerViewProfile = ShadowView()
-    
-    
     let profileUsername: UILabel = {
         let name = UILabel()
         name.font = UIFont.systemFont(ofSize: 29, weight: .bold)
@@ -40,9 +39,9 @@ class ProfileVC: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.text = "Number:"
         $0.font = UIFont.systemFont(ofSize: 13, weight: .heavy)
-        
         return $0
     }(UILabel())
+    
     let textEmail : UILabel = {
         $0.highlightedTextColor = .gray
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -50,6 +49,7 @@ class ProfileVC: UIViewController {
         $0.font = UIFont.systemFont(ofSize: 13, weight: .heavy)
         return $0
     }(UILabel())
+    
     let textCountry : UILabel = {
         $0.highlightedTextColor = .gray
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -57,6 +57,7 @@ class ProfileVC: UIViewController {
         $0.font = UIFont.systemFont(ofSize: 13, weight: .heavy)
         return $0
     }(UILabel())
+    
     let textGender : UILabel = {
         $0.highlightedTextColor = .gray
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -64,6 +65,7 @@ class ProfileVC: UIViewController {
         $0.font = UIFont.systemFont(ofSize: 13, weight: .heavy)
         return $0
     }(UILabel())
+    
     let profileCountry = UILabel()
     let profileGender = UILabel()
     let profileEmail = UILabel()
@@ -72,7 +74,7 @@ class ProfileVC: UIViewController {
           let stack = UIStackView()
           stack.translatesAutoresizingMaskIntoConstraints = false
           stack.axis = .vertical
-        stack.distribution = .equalSpacing
+          stack.distribution = .equalSpacing
           stack.spacing = 7
         return stack
       }()
@@ -80,15 +82,32 @@ class ProfileVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpUI()
-    
-        
+            setUpUI()
+         setUpConstraint()
         
         UserAPI.getUserData(id: user.id) { userResponse in
             self.user = userResponse
             self.setUpUI()
         }
 
+    }
+    
+    func setUpUI(){
+        
+        profileUsername.text = user.firstName + " " + user.lastName
+        if let image = user.picture {
+            profileImageView.setImageFromStringUrl(stringUrl: image)
+        }
+        profileEmail.text = user.email
+        profileNumber.text = user.phone
+        profileGender.text = user.gender
+        if let location = user.location{
+            profileCountry.text = location.country! + " _ " + location.city!
+        }
+    }
+    
+    func setUpConstraint(){
+        
         view.backgroundColor = .white
         view.addSubview(containerViewProfile)
         containerViewProfile.backgroundColor = .gray
@@ -99,9 +118,7 @@ class ProfileVC: UIViewController {
         containerViewProfile.addSubview(textEmail)
         containerViewProfile.addSubview(textCountry)
         containerViewProfile.addSubview(textGender)
-//        profileUsername.text = "Fatimah"
-
-       
+        
         containerViewProfile.translatesAutoresizingMaskIntoConstraints = false
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         profileUsername.translatesAutoresizingMaskIntoConstraints = false
@@ -110,18 +127,13 @@ class ProfileVC: UIViewController {
         stackViewDataProfile.addArrangedSubview(profileEmail)
         stackViewDataProfile.addArrangedSubview(profileCountry)
         stackViewDataProfile.addArrangedSubview(profileGender)
-        
-        
-//        profileNumber.text = "000000000000"
-//        profileEmail.text = "examle@examle.com"
-//        profileGender.text = "Femal"
-//        profileCountry.text = "Saudia Arabia"
-        
-        
+        profileNumber.text = "0500060007"
+
+
         NSLayoutConstraint.activate([
             containerViewProfile.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            containerViewProfile.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            containerViewProfile.widthAnchor.constraint(equalToConstant: 325),
+            containerViewProfile.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant: 70),
+            containerViewProfile.widthAnchor.constraint(equalToConstant: 350),
             containerViewProfile.heightAnchor.constraint(equalToConstant: 480),
            
             profileImageView.topAnchor.constraint(equalTo: containerViewProfile.topAnchor, constant: 10),
@@ -145,26 +157,11 @@ class ProfileVC: UIViewController {
             textGender.topAnchor.constraint(equalTo: textCountry.topAnchor, constant: 60),
             textGender.leftAnchor.constraint(equalTo: containerViewProfile.leftAnchor, constant: 10),
             
-            stackViewDataProfile.topAnchor.constraint(equalTo: profileUsername.bottomAnchor, constant: 10),
-            stackViewDataProfile.leftAnchor.constraint(equalTo: containerViewProfile.leftAnchor, constant: 100),
+            stackViewDataProfile.topAnchor.constraint(equalTo: profileUsername.bottomAnchor, constant: 25),
+            stackViewDataProfile.leftAnchor.constraint(equalTo: containerViewProfile.leftAnchor, constant: 90),
             stackViewDataProfile.rightAnchor.constraint(equalTo: containerViewProfile.rightAnchor, constant: -15),
-            stackViewDataProfile.bottomAnchor.constraint(equalTo: containerViewProfile.bottomAnchor, constant: -10),
+            stackViewDataProfile.bottomAnchor.constraint(equalTo: containerViewProfile.bottomAnchor, constant: -40),
         ])
-    }
-    
-    func setUpUI(){
-        
-        profileUsername.text = user.firstName + " " + user.lastName
-        if let image = user.picture {
-            profileImageView.setImageFromStringUrl(stringUrl: image)
-        }
-        profileEmail.text = user.email
-        profileNumber.text = user.phone
-        profileGender.text = user.gender
-        if let location = user.location{
-            profileCountry.text = location.country! + " _ " + location.city!
-        }
-      
     }
 }
 

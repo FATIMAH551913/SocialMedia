@@ -15,8 +15,6 @@ class PostDetailsVC: UIViewController {
     var post: Post!
     var comments:[Comment] = []
   
-    
-    
     let cellID = "CommentCell"
     let contentView = ShadowView()
     let containerViewTV = ShadowView()
@@ -30,25 +28,18 @@ class PostDetailsVC: UIViewController {
     let scrollView = UIScrollView()
     let contentViewScroll = UIView()
     let loding = UIActivityIndicatorView()
-//    let newCommentSV : UIStackView = {
-//
-//    }(UIStackView())
-    
+
     let sendbtn : UIButton = {
         $0.setImage(UIImage(systemName: "arrowshape.turn.up.right.fill"), for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 10, weight: .bold)
         $0.addTarget(self, action: #selector(sendButtomClicked), for: .touchUpInside)
         return $0
     }(UIButton())
-//    let textFieldComment = UITextField()
+
     let textFieldComment : UITextField = {
         $0.placeholder = "add ur Comments"
         $0.textAlignment = .center
-//        $0.addTarget(self, action: #selector(sendButtomtext), for: .touchUpInside)
-
-       
-//        $0.backgroundColor = .init(white: 0.90, alpha: 1)
-        $0.backgroundColor = .red
+        $0.backgroundColor = .init(white: 0.90, alpha: 1)
         $0.layer.cornerRadius = 3
         return $0
     }(UITextField())
@@ -124,12 +115,10 @@ class PostDetailsVC: UIViewController {
         containerViewTV.addSubview(textFieldComment)
         containerViewTV.addSubview(commentsTableView)
         
-        
-        
         scrollView.backgroundColor = .systemGray6
         loding.color = .blue
-        containerViewTV.backgroundColor = .green
-        contentViewScroll.backgroundColor = .yellow
+        containerViewTV.backgroundColor = .systemGray6
+        contentViewScroll.backgroundColor = .systemGray6
         contentView.backgroundColor = .white
         commentsTableView.backgroundColor = .white
         
@@ -139,11 +128,12 @@ class PostDetailsVC: UIViewController {
             scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+           
             
             contentViewScroll.rightAnchor.constraint(equalTo: scrollView.rightAnchor),
             contentViewScroll.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
             contentViewScroll.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentViewScroll.heightAnchor.constraint(equalTo: scrollView.heightAnchor, constant: 600),
+            contentViewScroll.heightAnchor.constraint(equalToConstant: 700),
             contentViewScroll.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             contentViewScroll.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             
@@ -155,14 +145,15 @@ class PostDetailsVC: UIViewController {
             contentView.leftAnchor.constraint(equalTo: contentViewScroll.leftAnchor,constant: 8),
             contentView.topAnchor.constraint(equalTo: contentViewScroll.topAnchor,constant: 10),
             contentView.bottomAnchor.constraint(equalTo: contentViewScroll.bottomAnchor,constant: -1000),
-//            contentView.heightAnchor.constraint(equalTo: contentViewScroll.heightAnchor, constant: 100),
+            contentView.heightAnchor.constraint(equalToConstant: 350),
+
             
             containerViewTV.rightAnchor.constraint(equalTo: contentViewScroll.rightAnchor,constant: -8),
             containerViewTV.leftAnchor.constraint(equalTo: contentViewScroll.leftAnchor,constant: 8),
             containerViewTV.topAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 10 ),
             containerViewTV.bottomAnchor.constraint(equalTo: contentViewScroll.bottomAnchor,constant: -10),
             containerViewTV.heightAnchor.constraint(equalTo: commentsTableView.heightAnchor, constant: 100),
-            
+           
             commentsTableView.rightAnchor.constraint(equalTo: containerViewTV.rightAnchor),
             commentsTableView.leftAnchor.constraint(equalTo: containerViewTV.leftAnchor),
             commentsTableView.topAnchor.constraint(equalTo: contentView.bottomAnchor,constant: 10 ),
@@ -180,7 +171,6 @@ class PostDetailsVC: UIViewController {
             textFieldComment.leftAnchor.constraint(equalTo: containerViewTV.leftAnchor, constant: 20),
             textFieldComment.rightAnchor.constraint(equalTo: containerViewTV.rightAnchor, constant: -40),
             textFieldComment.bottomAnchor.constraint(equalTo: containerViewTV.bottomAnchor, constant: -25)
-            
             
         ])
         
@@ -215,31 +205,29 @@ class PostDetailsVC: UIViewController {
         
         let constraints = [
             
-            postImageView.topAnchor.constraint(equalTo: postTextLabel.topAnchor, constant: 100),
+            postImageView.topAnchor.constraint(equalTo: postTextLabel.topAnchor, constant: 70),
             postImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
             postImageView.rightAnchor.constraint(equalTo:contentView.rightAnchor, constant: -10),
             postImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50),
         
-            postTextLabel.topAnchor.constraint(equalTo: usernameLabel.topAnchor, constant: 10),
+            postTextLabel.topAnchor.constraint(equalTo: usernameLabel.topAnchor, constant: 20),
             postTextLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
             postTextLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
-            postTextLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -300),
+            postTextLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -200),
             
             likesBotton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             likesBotton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 30),
             likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             likesLabel.leftAnchor.constraint(equalTo: likesBotton.rightAnchor, constant: 10),
             
-            userImgView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            userImgView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 15),
-            userImgView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -320),
-            userImgView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -380),
+            userImgView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 25),
+            userImgView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 25),
+            userImgView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -310),
+            userImgView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -290),
 
-            
-            usernameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30),
+            usernameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 35),
             usernameLabel.leftAnchor.constraint(equalTo: userImgView.rightAnchor, constant: 20),
             usernameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: 10),
-            
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -254,6 +242,7 @@ extension PostDetailsVC: UITableViewDelegate, UITableViewDataSource {
         comments.count
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! CommentCell
        let currentComment = comments[indexPath.row]
@@ -264,14 +253,10 @@ extension PostDetailsVC: UITableViewDelegate, UITableViewDataSource {
         if let userImage = currentComment.owner.picture{
             cell.userImgComment.setImageFromStringUrl(stringUrl: userImage)
         }
-
-        
-
-       
-        
-        
         return cell
     }
+    
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 107
     }

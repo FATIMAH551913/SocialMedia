@@ -9,4 +9,6 @@ target 'Social-Media' do
     pod 'Alamofire', '~> 5.4'
     pod 'SwiftyJSON', '~> 4.0'
     pod 'NVActivityIndicatorView'
+    pod 'IQKeyboardManagerSwift'
+    pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 end

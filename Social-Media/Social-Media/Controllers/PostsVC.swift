@@ -21,6 +21,7 @@ class PostsVC: UIViewController {
     
     let cellID = "PostCell"
     let postTableView = UITableView()
+    let loaderView = UIActivityIndicatorView()
     let headerview = UIView()
    
     let allPost : UILabel = {
@@ -52,7 +53,6 @@ class PostsVC: UIViewController {
         lbl.textAlignment = .center
         lbl.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         lbl.textColor = .white
-//        lbl.backgroundColor = .white
         lbl.layer.shadowRadius = 10
         lbl.layer.shadowOpacity = 1.0
         lbl.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -61,25 +61,21 @@ class PostsVC: UIViewController {
         return lbl
     }()
     
-
-    
-    let loaderView = UIActivityIndicatorView()
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
            getPosts()
+           setUpUi()
+        
+        postTableView.delegate = self
+        postTableView.dataSource = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(newPostAdded), name: NSNotification.Name("NewPostAdded"), object: nil)
-        
-        
         
         //check if user is logged in or it's only a guest
         if let user = UserManager.loggedInUser {
             WelcLabel.text = "Hi,\(user.firstName)"
         }else{
             WelcLabel.isHidden = true
-        
         }
         
         //check if there is a tag
@@ -90,83 +86,8 @@ class PostsVC: UIViewController {
             NameTag.isHidden = true
         }
         
-        postTableView.delegate = self
-        postTableView.dataSource = self
-     
-        view.addSubview(postTableView)
-        view.addSubview(headerview)
-        view.addSubview(allPost)
-        view.addSubview(loaderView)
-        view.addSubview(logOutButton)
-        headerview.addSubview(WelcLabel)
-        headerview.addSubview(NameTag)
         
-        //هذي الخاصية تخفي الفواصل بين السل.
-        postTableView.separatorStyle = .none
-        postTableView.showsVerticalScrollIndicator = false
-        // تخفي الظل من الصورة عند الضغط .
-        //        postTableView.allowsSelection = false
-        
-        
-        headerview.backgroundColor = .systemBrown
-        loaderView.color = .blue
-        loaderView.style = .medium
-       
-       
-//        WelcLabel.backgroundColor = .white
-        
-       
-        postTableView.backgroundColor = .systemGray6
-        postTableView.register(PostCell.self, forCellReuseIdentifier: cellID )
-        headerview.translatesAutoresizingMaskIntoConstraints = false
-        postTableView.translatesAutoresizingMaskIntoConstraints = false
-        allPost.translatesAutoresizingMaskIntoConstraints = false
-        loaderView.translatesAutoresizingMaskIntoConstraints = false
-        WelcLabel.translatesAutoresizingMaskIntoConstraints = false
-        logOutButton.translatesAutoresizingMaskIntoConstraints = false
-        NameTag.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            
-            
-            logOutButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-            logOutButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15),
-            logOutButton.bottomAnchor.constraint(equalTo: postTableView.topAnchor, constant: -10),
-            
-            loaderView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 120),
-            loaderView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 120),
-            loaderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            headerview.topAnchor.constraint(equalTo: view.topAnchor),
-            headerview.leftAnchor.constraint(equalTo: view.leftAnchor),
-            headerview.rightAnchor.constraint(equalTo: view.rightAnchor),
-            headerview.bottomAnchor.constraint(equalTo: postTableView.topAnchor),
-            
-
-            
-            
-            postTableView.topAnchor.constraint(equalTo:view.topAnchor, constant: 200),
-            postTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            postTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            postTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-       
-            
-            allPost.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            allPost.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-            
-            WelcLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            WelcLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 130),
-            
-            NameTag.leftAnchor.constraint(equalTo: allPost.rightAnchor, constant: 10),
-            NameTag.bottomAnchor.constraint(equalTo: postTableView.topAnchor, constant: -10),
-            NameTag.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-//            NameTag.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 70)
-        ])
-        
-        
-    
-
-        view.backgroundColor = .white
+        view.backgroundColor = .systemPurple
     }
     
     
@@ -253,7 +174,7 @@ extension PostsVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 640
+        return 580
     }
     //هذي الدالة تستدعي الاندكس باث وبالتالي تخبرني وين وصل المستخدم بالضبط لاي شريحة وكيف نعرف انه وصل لاخر شريحة؟ نقصنا ١ حتي يتحقق الشرط
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -277,6 +198,73 @@ extension PostsVC : PostCellDelegate {
 
         }
     }
+}
+
+extension PostsVC {
+    func setUpUi() {
+        
+        view.addSubview(postTableView)
+        view.addSubview(headerview)
+        view.addSubview(allPost)
+        view.addSubview(loaderView)
+        view.addSubview(logOutButton)
+        headerview.addSubview(WelcLabel)
+        headerview.addSubview(NameTag)
+        
+        //هذي الخاصية تخفي الفواصل بين السل.
+        postTableView.separatorStyle = .none
+        postTableView.showsVerticalScrollIndicator = false
+        // تخفي الظل من الصورة عند الضغط .
+        //        postTableView.allowsSelection = false
+        
+        
+        headerview.backgroundColor = .systemPurple
+        loaderView.color = .blue
+        loaderView.style = .medium
+       
+        postTableView.backgroundColor = .systemGray6
+        postTableView.register(PostCell.self, forCellReuseIdentifier: cellID )
+        headerview.translatesAutoresizingMaskIntoConstraints = false
+        postTableView.translatesAutoresizingMaskIntoConstraints = false
+        allPost.translatesAutoresizingMaskIntoConstraints = false
+        loaderView.translatesAutoresizingMaskIntoConstraints = false
+        WelcLabel.translatesAutoresizingMaskIntoConstraints = false
+        logOutButton.translatesAutoresizingMaskIntoConstraints = false
+        NameTag.translatesAutoresizingMaskIntoConstraints = false
+       
+        NSLayoutConstraint.activate([
+            logOutButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+            logOutButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15),
+            logOutButton.bottomAnchor.constraint(equalTo: postTableView.topAnchor, constant: -10),
+            
+            loaderView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 120),
+            loaderView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 120),
+            loaderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            headerview.topAnchor.constraint(equalTo: view.topAnchor),
+            headerview.leftAnchor.constraint(equalTo: view.leftAnchor),
+            headerview.rightAnchor.constraint(equalTo: view.rightAnchor),
+            headerview.bottomAnchor.constraint(equalTo: postTableView.topAnchor),
+            
+            postTableView.topAnchor.constraint(equalTo:view.topAnchor, constant: 200),
+            postTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            postTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            postTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            allPost.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            allPost.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+            
+            WelcLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            WelcLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 130),
+            
+            NameTag.leftAnchor.constraint(equalTo: allPost.rightAnchor, constant: 10),
+            NameTag.bottomAnchor.constraint(equalTo: postTableView.topAnchor, constant: -10),
+            NameTag.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+
+        ])
+    }
+    
+    
 }
 
 
