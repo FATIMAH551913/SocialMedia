@@ -18,6 +18,7 @@ New Project
 
 ## Collection View Inside Collection View: 
 
+![Collection View inside Collection view](https://user-images.githubusercontent.com/91545762/173247789-d4027b90-b359-46fa-b82f-e7a48088cd07.png)
 
 ## User Stories: 
 
