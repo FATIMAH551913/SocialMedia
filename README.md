@@ -63,10 +63,9 @@ I used MVC pattren stands for Model-View-Controller Pattern. This pattern is use
 - PostAPI 
 - UserAPI
 - API
-- 
+
 # Links
 ## github:
 (https://github.com/FATIMAH551913/SocialMedia)
 
-## Slides:
 
