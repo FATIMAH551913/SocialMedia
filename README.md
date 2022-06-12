@@ -32,7 +32,7 @@ New Project
 - **Details Pages:** As a user I can display details posts so that I can see profile of user for specific post and posting feadback for their picture.
 - **Tags:** As a user I can display all tags so that I can see all picture that related to one tag
 
-# RahaAndNawa
+# SocialMedia
 I used MVC pattren stands for Model-View-Controller Pattern. This pattern is used to separate application's concerns.   
 
 ### Models :
